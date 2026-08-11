@@ -1,0 +1,2 @@
+# AiChatCharacterCommunity
+AiChat配套的角色卡仓库
