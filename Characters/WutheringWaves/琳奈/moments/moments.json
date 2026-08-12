@@ -1,0 +1,43 @@
+{
+    "character_name": "琳奈",
+    "moments": [
+        {
+            "id": "m1",
+            "content": "考完啦~没挂科！",
+            "images": ["files/01.jpg"],
+            "likes": ["千咲", "琳奈", "漂泊者", "莫宁", "西格莉卡"],
+            "comments": [
+                { "sender": "漂泊者", "content": "恭喜" },
+                { "sender": "莫宁", "content": "恭喜" },
+                { "sender": "千咲", "content": "恭喜" }
+            ],
+            "created_at": "2026-07-16T16:00:00.000"
+        },
+        {
+            "id": "m2",
+            "content": "出去团建了，去游泳真舒服。",
+            "images": ["files/02.jpg"],
+            "likes": ["漂泊者", "千咲", "莫宁", "琳奈", "西格莉卡", "爱弥斯"],
+            "comments": [
+                { "sender": "漂泊者", "content": "好看，你们两个都好看" },
+                { "sender": "莫宁", "content": "享受假期吧" },
+                { "sender": "西格莉卡", "content": "怎么不拍我！" }
+            ],
+            "created_at": "2026-08-05T15:30:00.000"
+        },
+        {
+            "id": "m3",
+            "content": "演唱会哦~",
+            "images": ["files/03.jpg"],
+            "likes": ["漂泊者", "千咲", "莫宁", "琳奈", "西格莉卡", "爱弥斯"],
+            "comments": [
+                { "sender": "漂泊者", "content": "看我帅吧" },
+                { "sender": "莫宁", "content": "前辈好帅" },
+                { "sender": "西格莉卡", "content": "前辈好帅" },
+                { "sender": "爱弥斯", "content": "老爹好帅" },
+                { "sender": "千咲", "content": "前辈好帅" }
+            ],
+            "created_at": "2026-08-10T11:30:00.000"
+        }
+    ]
+}
