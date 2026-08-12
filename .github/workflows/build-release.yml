@@ -23,20 +23,20 @@ jobs:
     name: 打包
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: 运行打包脚本
         run: bash scripts/build-packs.sh
 
       - name: 上传游戏包产物
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: game-packs
           path: dist/game/*.zip
           if-no-files-found: error
 
       - name: 上传角色包产物
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: single-packs
           path: dist/single/*.zip
@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 下载游戏包产物
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: game-packs
           path: packs
@@ -57,8 +57,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          # 删除旧 release 与 tag，再重建，实现"覆盖更新同名 release"
+          # 诊断：确认待上传文件存在
+          ls -la packs/
+          # 删除同名旧 release（连带清理 tag）
           gh release delete "V${{ env.GAME_PACK_VERSION }}" --yes --cleanup-tag 2>/dev/null || true
+          # 兜底：若仅剩孤立 tag（无 release），强制删除，避免 create 报 tag 已存在
+          gh api "repos/${{ github.repository }}/git/refs/tags/V${{ env.GAME_PACK_VERSION }}" -X DELETE 2>/dev/null || true
+          # 创建 release（tag 不存在时自动创建）
           gh release create "V${{ env.GAME_PACK_VERSION }}" packs/*.zip \
             --title "游戏分类角色包 V${{ env.GAME_PACK_VERSION }}" \
             --target "${{ github.sha }}" \
@@ -70,7 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 下载角色包产物
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: single-packs
           path: packs
@@ -79,8 +84,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          # 删除旧 release 与 tag，再重建，实现"覆盖更新同名 release"
+          # 诊断：确认待上传文件存在
+          ls -la packs/
+          # 删除同名旧 release（连带清理 tag）
           gh release delete "V${{ env.SINGLE_PACK_VERSION }}" --yes --cleanup-tag 2>/dev/null || true
+          # 兜底：若仅剩孤立 tag（无 release），强制删除，避免 create 报 tag 已存在
+          gh api "repos/${{ github.repository }}/git/refs/tags/V${{ env.SINGLE_PACK_VERSION }}" -X DELETE 2>/dev/null || true
+          # 创建 release（tag 不存在时自动创建）
           gh release create "V${{ env.SINGLE_PACK_VERSION }}" packs/*.zip \
             --title "角色分类角色包 V${{ env.SINGLE_PACK_VERSION }}" \
             --target "${{ github.sha }}" \
