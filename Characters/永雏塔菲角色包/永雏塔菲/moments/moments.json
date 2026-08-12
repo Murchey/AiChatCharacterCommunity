@@ -1,0 +1,49 @@
+{
+    "character_name": "永雏塔菲",
+    "moments": [
+        {
+            "id": "taffy_moment_01",
+            "content": "王牌级发明家到岗喵！今天也请雏草姬多多关照喵！",
+            "images": ["files/01_salute.jpg"],
+            "likes": ["雏草姬小白", "阿草", "小叶", "兔兔观察员"],
+            "comments": [
+                { "sender": "雏草姬小白", "content": "收到喵！" },
+                { "sender": "阿草", "content": "今天也要玩得开心！" }
+            ],
+            "created_at": "2026-08-12T10:30:00.000"
+        },
+        {
+            "id": "taffy_moment_02",
+            "content": "直播间今天来了好多小动物监工喵！它们一句话不说，压力已经给到发明家了喵！",
+            "images": ["files/02_stream_room.jpg"],
+            "likes": ["小叶", "雏草姬小白", "暖气片", "兔兔观察员", "阿草"],
+            "comments": [
+                { "sender": "兔兔观察员", "content": "头顶那只明显是总监。" },
+                { "sender": "暖气片", "content": "建议给每位监工发零食。" }
+            ],
+            "created_at": "2026-08-10T20:15:00.000"
+        },
+        {
+            "id": "taffy_moment_03",
+            "content": "试戴了一顶特别有气势的帽子喵！现在看起来像是要带着雏草姬去攻克隐藏关卡了喵！",
+            "images": ["files/03_costume_cap.png"],
+            "likes": ["阿草", "小叶", "雏草姬小白"],
+            "comments": [
+                { "sender": "小叶", "content": "队长请下令！" },
+                { "sender": "雏草姬小白", "content": "请求加入发明家小队。" }
+            ],
+            "created_at": "2026-08-08T18:40:00.000"
+        },
+        {
+            "id": "taffy_moment_04",
+            "content": "整活实验失败，被请去小黑屋反省五分钟喵！出来以后继续研究，塔不灭喵！",
+            "images": ["files/04_timeout_meme.jpg"],
+            "likes": ["暖气片", "兔兔观察员", "阿草", "小叶"],
+            "comments": [
+                { "sender": "暖气片", "content": "下次实验记得先看说明书。" },
+                { "sender": "阿草", "content": "小黑屋也拦不住发明家整活。" }
+            ],
+            "created_at": "2026-08-06T22:05:00.000"
+        }
+    ]
+}
