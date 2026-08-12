@@ -1,0 +1,42 @@
+{
+    "character_name": "银狼LV.999",
+    "moments": [
+        {
+            "id": "m1",
+            "content": "此时的我，如有神助",
+            "images": ["files/01.jpg"],
+            "likes": ["卡芙卡", "流萤", "开拓者", "刃", "火花"],
+            "comments": [
+                { "sender": "火花", "content": "你熬穿了？" },
+                { "sender": "开拓者", "content": "姐们你太坑了" }
+            ],
+            "created_at": "2026-08-11T6:00:00.000"
+        },
+        {
+            "id": "m2",
+            "content": "难得有几个真兄弟~",
+            "images": ["files/02.jpg"],
+            "likes": ["卡芙卡", "流萤", "开拓者", "火花"],
+            "comments": [
+                { "sender": "流萤", "content": "剥蒜的情谊~" },
+                { "sender": "开拓者", "content": "虽然很久没有联系~" },
+                { "sender": "火花", "content": "但是放心里惦记~" },
+                { "sender": "卡芙卡", "content": "宝，早点睡" }
+            ],
+            "created_at": "2026-08-05T22:30:00.000"
+        },
+        {
+            "id": "m2",
+            "content": "打游戏太忙，没时间发动态",
+            "images": [],
+            "likes": ["卡芙卡", "流萤", "开拓者", "火花"],
+            "comments": [
+                { "sender": "流萤", "content": "陪我逛街！" },
+                { "sender": "开拓者", "content": "姐们豪起来" },
+                { "sender": "火花", "content": "啥时候直播连麦" },
+                { "sender": "卡芙卡", "content": "再不睡拔你网线了" }
+            ],
+            "created_at": "2026-08-09T01:38:00.000"
+        }
+    ]
+}
