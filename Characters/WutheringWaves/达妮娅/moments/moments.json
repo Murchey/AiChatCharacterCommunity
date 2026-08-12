@@ -1,0 +1,47 @@
+{
+    "character_name": "达妮娅",
+    "moments": [
+        {
+            "id": "m1",
+            "content": "请支持Solar5谢谢喵",
+            "images": ["files/01.jpg"],
+            "likes": ["漂泊者", "西格莉卡", "琳奈", "爱弥斯", "千咲", "莫宁", "菲比", "椿"],
+            "comments": [
+                { "sender": "西格莉卡", "content": "娅娅，你好可爱" },
+                { "sender": "漂泊者", "content": "可爱呢" },
+                { "sender": "菲比", "content": "请支持Solar5谢谢喵" },
+                { "sender": "琳奈", "content": "请支持Solar5谢谢喵" },
+                { "sender": "尤诺", "content": "请支持Solar5谢谢喵" },
+                { "sender": "椿", "content": "请支持Solar5谢谢喵" }
+            ],
+            "created_at": "2026-08-10T14:30:00.000"
+        },
+        {
+            "id": "m2",
+            "content": "一休尼~最好的我们",
+            "images": ["files/02.jpg"],
+            "likes": ["漂泊者", "西格莉卡", "爱弥斯", "千咲", "琳奈", "莫宁", "绯雪"],
+            "comments": [
+                { "sender": "西格莉卡", "content": "夕阳好美……我们三个要一直这样下去哦！不许反悔！" },
+                { "sender": "漂泊者", "content": "最好的我们。" },
+                { "sender": "爱弥斯", "content": "这张拍得也太好了吧～三人的笑容都好温暖，像落日一样！" },
+                { "sender": "琳奈", "content": "哟哟哟这不我姐们嘛～夕阳配美女，绝了" },
+                { "sender": "千咲", "content": "好温馨的画面呢，友谊真好～" },
+                { "sender": "绯雪", "content": "……拍得不错。" }
+            ],
+            "created_at": "2026-08-08T15:00:00.000"
+        },
+        {
+            "id": "m3",
+            "content": "和雪姨一起来到泰姬陵~",
+            "images": ["files/03.jpg"],
+            "likes": ["漂泊者", "西格莉卡", "爱弥斯", "琳奈", "绯雪"],
+            "comments": [
+                { "sender": "西格莉卡", "content": "下次我也想来！！" },
+                { "sender": "爱弥斯", "content": "照片拍得好好看～达妮娅的摄影技术一直很厉害呢" },
+                { "sender": "琳奈", "content": "角落才是最佳机位！相信我" }
+            ],
+            "created_at": "2026-08-05T16:00:00.000"
+        }
+    ]
+}
