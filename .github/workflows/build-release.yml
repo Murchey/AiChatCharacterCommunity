@@ -63,11 +63,21 @@ jobs:
           gh release delete "V${{ env.GAME_PACK_VERSION }}" --yes --cleanup-tag -R "${{ github.repository }}" 2>/dev/null || true
           # 兜底：若仅剩孤立 tag（无 release），强制删除，避免 create 报 tag 已存在
           gh api "repos/${{ github.repository }}/git/refs/tags/V${{ env.GAME_PACK_VERSION }}" -X DELETE 2>/dev/null || true
-          # 创建 release（tag 不存在时自动创建）
-          gh release create "V${{ env.GAME_PACK_VERSION }}" packs/*.zip -R "${{ github.repository }}" \
+          # 分两步：先创建 release，等就绪后再上传资产
+          # （上传失败自动重试，规避 GitHub release 刚创建时 uploads API 的最终一致性 404）
+          gh release create "V${{ env.GAME_PACK_VERSION }}" -R "${{ github.repository }}" \
             --title "游戏分类角色包 V${{ env.GAME_PACK_VERSION }}" \
             --target "${{ github.sha }}" \
             --notes "按游戏分类的角色包，随 Characters 内容更新自动覆盖。更新 commit: ${{ github.sha }}"
+          sleep 5
+          for i in 1 2 3 4 5; do
+            if gh release upload "V${{ env.GAME_PACK_VERSION }}" packs/*.zip -R "${{ github.repository }}" --clobber; then
+              echo "资产上传成功"
+              break
+            fi
+            echo "资产上传失败（第 ${i} 次），3 秒后重试"
+            sleep 3
+          done
 
   release-single:
     name: 发布角色分类角色包
@@ -90,8 +100,18 @@ jobs:
           gh release delete "V${{ env.SINGLE_PACK_VERSION }}" --yes --cleanup-tag -R "${{ github.repository }}" 2>/dev/null || true
           # 兜底：若仅剩孤立 tag（无 release），强制删除，避免 create 报 tag 已存在
           gh api "repos/${{ github.repository }}/git/refs/tags/V${{ env.SINGLE_PACK_VERSION }}" -X DELETE 2>/dev/null || true
-          # 创建 release（tag 不存在时自动创建）
-          gh release create "V${{ env.SINGLE_PACK_VERSION }}" packs/*.zip -R "${{ github.repository }}" \
+          # 分两步：先创建 release，等就绪后再上传资产
+          # （上传失败自动重试，规避 GitHub release 刚创建时 uploads API 的最终一致性 404）
+          gh release create "V${{ env.SINGLE_PACK_VERSION }}" -R "${{ github.repository }}" \
             --title "角色分类角色包 V${{ env.SINGLE_PACK_VERSION }}" \
             --target "${{ github.sha }}" \
             --notes "单个角色独立打包，随 Characters 内容更新自动覆盖。更新 commit: ${{ github.sha }}"
+          sleep 5
+          for i in 1 2 3 4 5; do
+            if gh release upload "V${{ env.SINGLE_PACK_VERSION }}" packs/*.zip -R "${{ github.repository }}" --clobber; then
+              echo "资产上传成功"
+              break
+            fi
+            echo "资产上传失败（第 ${i} 次），3 秒后重试"
+            sleep 3
+          done
