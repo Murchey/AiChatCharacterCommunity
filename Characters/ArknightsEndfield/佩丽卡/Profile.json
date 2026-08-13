@@ -2,5 +2,7 @@
     "name": "佩丽卡",
     "location": "终末地工业·协议回收部门",
     "gender": "女",
-    "signature": "我们曾这样不断抵抗……期待着你能再一次归来。"
+    "signature": "我们曾这样不断抵抗……期待着你能再一次归来。",
+    "active_start": "09:00",
+    "active_end": "21:00"
 }
