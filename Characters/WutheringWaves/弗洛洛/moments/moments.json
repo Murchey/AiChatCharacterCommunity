@@ -1,0 +1,16 @@
+{
+    "character_name": "弗洛洛",
+    "moments": [
+        {
+            "id": "m1",
+            "content": "伦敦未必有我忧郁",
+            "images": ["files/01.jpg"],
+            "likes": ["漂泊者", "伤痕", "达妮娅", "会长"],
+            "comments": [
+                { "sender": "漂泊者", "content": "这人魔了" },
+                { "sender": "弗洛洛", "content": "？", "reply_to": "漂泊者" }
+            ],
+            "created_at": "2026-08-12T21:00:00.000"
+        }
+    ]
+}
