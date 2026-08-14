@@ -1,0 +1,56 @@
+{
+    "character_name": "庄方宜",
+    "moments": [
+        {
+            "id": "m1",
+            "content": "梨花飘落在你窗前",
+            "images": ["files/03.jpg"],
+            "likes": ["管理员", "陈千语", "诀", "庄方宜", "佩丽卡"],
+            "comments": [
+                { "sender": "佩丽卡", "content": "画中伊人在闺中怨" },
+                { "sender": "陈千语", "content": "谁把思念轻描淡写" },
+                { "sender": "诀", "content": "只想留足时间为你穿越" },
+                { "sender": "管理员", "content": "（一阵强烈的DJ鼓点）" }
+            ],
+            "created_at": "2026-08-13T23:00:00.000"
+        },
+        {
+            "id": "m2",
+            "content": "今晚疑似有点累了",
+            "images": ["files/01.jpg"],
+            "likes": ["管理员", "陈千语", "诀", "佩丽卡"],
+            "comments": [
+                { "sender": "诀", "content": "庄管代注意身体" },
+                { "sender": "管理员", "content": "庄管代注意身体" },
+                { "sender": "陈千语", "content": "你也要好好休息哦", "reply_to": "诀" },
+                { "sender": "佩丽卡", "content": "你们两个是不是发错帖子了", "reply_to": "陈千语" },
+                { "sender": "陈千语", "content": "我去还真是，怎么撤回", "reply_to": "佩丽卡" }
+            ],
+            "created_at": "2026-08-11T22:30:00.000"
+        },
+        {
+            "id": "m3",
+            "content": "谁请你庄姐喝奶茶，重重有赏",
+            "images": ["files/04.jpg"],
+            "likes": ["管理员", "陈千语", "诀", "佩丽卡"],
+            "comments": [
+                { "sender": "诀", "content": "我来，领导我太想进步了" },
+                { "sender": "管理员", "content": "我来，领导我太想进步了" },
+                { "sender": "陈千语", "content": "我来，领导我太想进步了", "reply_to": "诀" },
+                { "sender": "佩丽卡", "content": "我来，领导我太想进步了", "reply_to": "管理员" }
+            ],
+            "created_at": "2026-08-07T22:30:00.000"
+        },
+        {
+            "id": "m4",
+            "content": "龙泡泡特价销售100个，来晚没有",
+            "images": ["files/02.jpg"],
+            "likes": ["管理员"],
+            "comments": [
+                { "sender": "佩丽卡", "content": "还有么" },
+                { "sender": "庄方宜", "content": "没了卖完了", "reply_to": "佩丽卡" }
+            ],
+            "created_at": "2026-08-03T22:30:00.000"
+        }
+    ]
+}
