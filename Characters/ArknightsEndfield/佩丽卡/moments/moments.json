@@ -1,0 +1,40 @@
+{
+    "character_name": "佩丽卡",
+    "moments": [
+        {
+            "id": "m1",
+            "content": "处理完今天的危机报告，终于能准时下班了。然后馋了，买了杯咖啡。这不是不自律嗷。",
+            "images": ["files/01.jpg"],
+            "likes": ["陈千语", "管理员"],
+            "comments": [
+                { "sender": "陈千语", "content": "佩丽卡又加班啦！注意身体呀～" }
+            ],
+            "created_at": "2026-08-15T18:30:00.000"
+        },
+        {
+            "id": "m2",
+            "content": "刚回四号谷地，被小兔子给截胡了",
+            "images": ["files/02.jpg"],
+            "likes": ["陈千语", "管理员", "庄方宜", "佩丽卡"],
+            "comments": [
+                { "sender": "陈千语", "content": "好看" },
+                { "sender": "管理员", "content": "好看" },
+                { "sender": "庄方宜", "content": "好看" },
+                { "sender": "佩丽卡", "content": "好看", "reply_to": "管理员" }
+            ],
+            "created_at": "2026-08-10T23:45:00.000"
+        },
+        {
+            "id": "m3",
+            "content": "难得休息日，把宿舍彻底打扫了一遍。整理文件时发现几张以前的照片，时间过得真快。不过现在不是怀旧的时候，下午还有战术研讨会要准备。",
+            "images": ["files/03.jpg", "files/04.jpg"],
+            "likes": ["陈千语", "管理员", "佩丽卡"],
+            "comments": [
+                { "sender": "管理员", "content": "以前这么好看？" },
+                { "sender": "佩丽卡", "content": "现在不好看么……", "reply_to": "管理员" },
+                { "sender": "管理员", "content": "现在也好看", "reply_to": "佩丽卡" }
+            ],
+            "created_at": "2026-08-05T11:20:00.000"
+        }
+    ]
+}
