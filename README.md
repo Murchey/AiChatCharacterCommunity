@@ -53,13 +53,13 @@ CharactersImport/
 | `location` | 所在地（映射到「地区」） | 可选 |
 | `gender` | 性别 | 可选 |
 | `signature` | 个性签名 | 可选 |
-| `remark` | 备注 | 可选 |
-| `description` | 角色简介 | 可选 |
-| `personality` | 性格特征 | 可选 |
-| `greeting` | 开场白 | 可选 |
-| `user_relationship` | 与用户的关系 | 可选 |
+| `remark` | 备注 | 不填写以达到最佳效果 |
+| `description` | 角色简介 | 不填写以达到最佳效果 |
+| `personality` | 性格特征 | 不填写以达到最佳效果 |
+| `greeting` | 开场白 | 不填写以达到最佳效果 |
+| `user_relationship` | 与用户的关系 | 不填写以达到最佳效果 |
 | `active_start` / `active_end` | 活跃时段，值为 `"HH:mm"`（如 `"09:00"`）；两者同时设置并生效后，在该时间段内聊天角色不会主动道别、说晚安，保持活跃；任一为空表示未设置 | 可选 |
-| `tags` | 标签数组，如 `["鸣潮","电子幽灵"]` | 可选 |
+| `tags` | 标签数组，如 `["鸣潮","电子幽灵"]` | 不填写以达到最佳效果 |
 | `avatar` | 内嵌头像（base64 字符串，存在时优先于图片文件） | 可选 |
 | `background` | 内嵌背景图（base64 字符串，存在时优先于 `ProfileBackground.jpg`） | 可选 |
 | `memory_points` | 持久化记忆数组（可选），元素为 `{"content": "记忆内容", "created_at": "创建时间"}`；导入角色包时写入该角色的记忆库 | 可选 |
