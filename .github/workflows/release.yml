@@ -56,25 +56,7 @@ jobs:
             if [ -d "$char_dir" ]; then
               char_name=$(basename "$char_dir")
               
-              zip_filename=$(python3 -c "
-import re
-from pypinyin import pinyin, Style
-def to_camel(name):
-    parts = []
-    for seg in re.split(r'([\x00-\x7f]+)', name):
-        if not seg:
-            continue
-        if seg.isascii():
-            cleaned = re.sub(r'[^A-Za-z0-9._-]', '', seg)
-            if cleaned:
-                parts.append(cleaned)
-        else:
-            camel = ''.join(s[0].capitalize() for s in pinyin(seg, style=Style.NORMAL) if s[0] and all(ord(c) < 128 and c.isalnum() for c in s[0]))
-            if camel:
-                parts.append(camel)
-    return '_'.join(parts)
-print(to_camel('$char_name'))
-")
+              zip_filename=$(python3 .github/scripts/to_camel.py "$char_name")
               zip_path="release_packages/$zip_filename.zip"
               cd "$(dirname "$char_dir")"
               zip -r "../../$zip_path" "$char_name/"
