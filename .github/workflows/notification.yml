@@ -23,49 +23,32 @@ jobs:
         id: commit_info
         run: |
           COMMIT_TITLE=$(git log -1 --pretty=format:"%s")
-          COMMIT_AUTHOR=$(git log -1 --pretty=format:"%an")
           COMMIT_DATE=$(git log -1 --pretty=format:"%ci")
           COMMIT_HASH=$(git log -1 --pretty=format:"%h")
           echo "title=$COMMIT_TITLE" >> $GITHUB_OUTPUT
-          echo "author=$COMMIT_AUTHOR" >> $GITHUB_OUTPUT
           echo "date=$COMMIT_DATE" >> $GITHUB_OUTPUT
           echo "hash=$COMMIT_HASH" >> $GITHUB_OUTPUT
 
       - name: Generate release notes
         run: |
           cat > release_notes.md << EOF
-          # 【更新通知】
+          **最新更新：**
           
-          ## 最新更新
+          - 提交信息： ${{ steps.commit_info.outputs.title }}
+          - 提交时间： ${{ steps.commit_info.outputs.date }}
           
-          **提交信息：** ${{ steps.commit_info.outputs.title }}
-          
-          **提交者：** ${{ steps.commit_info.outputs.author }}
-          
-          **提交时间：** ${{ steps.commit_info.outputs.date }}
-          
-          **提交哈希：** ${{ steps.commit_info.outputs.hash }}
-          
-          ---
-          
-          ## 历史更新记录
+          **历史更新记录：**
           EOF
           
-          # 获取最近 10 条提交记录
-          git log --pretty=format:"- %s (%h, %ci)" -10 >> release_notes.md
+          # 获取最近 3 条提交记录
+          git log --pretty=format:"- %s (%h, %ci)" -3 >> release_notes.md
           
-          cat >> release_notes.md << 'EOF'
-          
-          ---
-          
-          ## 说明
-          
-          此 Release 用于显示最新的更新通知，每次 commit 都会自动更新。
-          
-          其他 Release：
-          - [V1.0.0（游戏分类角色包）](./tag/V1.0.0)
-          - [V1.1.0（角色分类角色包）](./tag/V1.1.0)
-          EOF
+          echo "" >> release_notes.md
+          echo "---" >> release_notes.md
+          echo "" >> release_notes.md
+          echo "其他 Release：" >> release_notes.md
+          echo "- [V1.0.0（游戏分类角色包）](./tag/V1.0.0)" >> release_notes.md
+          echo "- [V1.1.0（角色分类角色包）](./tag/V1.1.0)" >> release_notes.md
 
       - name: Delete existing release V1.2.0
         run: |
