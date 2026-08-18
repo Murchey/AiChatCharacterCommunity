@@ -1,19 +1,57 @@
-name: Release Character Packages
+﻿name: Release Character Packages
 
 on:
   push:
     branches:
       - main  # push 到 main 分支时触发
-    # paths:
-    #   - 'Characters/**'  # 只有 Characters 目录下的文件变化才触发
   workflow_dispatch:  # 允许手动触发
 
 permissions:
   contents: write
 
 jobs:
-  build:
-    name: 打包角色
+  build-game:
+    name: 打包（按游戏分类）
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install pypinyin
+        run: pip install pypinyin
+
+      - name: Create game zip packages
+        run: |
+          mkdir -p release_packages/game name_mapping/game
+          for game_dir in Characters/*/; do
+            if [ -d "$game_dir" ]; then
+              game_name=$(basename "$game_dir")
+              zip_filename=$(python3 .github/scripts/to_camel.py "$game_name")
+              zip_path="release_packages/game/$zip_filename.zip"
+              echo "$game_name" > "name_mapping/game/$zip_filename.txt"
+              cd Characters
+              zip -r "../$zip_path" "$game_name/"
+              cd ..
+              echo "Created game pack: $zip_filename.zip"
+            fi
+          done
+
+      - name: Upload game artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: game-packages
+          path: |
+            release_packages/game/*.zip
+            name_mapping/game/*.txt
+          if-no-files-found: error
+
+  build-single:
+    name: 打包（按角色分类）
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -41,74 +79,96 @@ jobs:
                   else
                     CHARACTER_LIST="$char_dir"
                   fi
-                  echo "Found: $char_name"
                 fi
               done
             fi
           done
           echo "characters=$CHARACTER_LIST" >> $GITHUB_OUTPUT
 
-      - name: Create character zip packages
-        id: create_zips
+      - name: Create single zip packages
         run: |
-          mkdir -p release_packages
-          mkdir -p name_mapping
+          mkdir -p release_packages/single name_mapping/single
           IFS='|' read -ra CHAR_DIRS <<< "${{ steps.find_characters.outputs.characters }}"
-          
           for char_dir in "${CHAR_DIRS[@]}"; do
             if [ -d "$char_dir" ]; then
               char_name=$(basename "$char_dir")
-              
               zip_filename=$(python3 .github/scripts/to_camel.py "$char_name")
-              zip_path="release_packages/$zip_filename.zip"
-              
-              # 保存映射关系
-              echo "$char_name" > "name_mapping/$zip_filename.txt"
-              
+              zip_path="release_packages/single/$zip_filename.zip"
+              echo "$char_name" > "name_mapping/single/$zip_filename.txt"
               cd "$(dirname "$char_dir")"
               zip -r "../../$zip_path" "$char_name/"
               cd - > /dev/null
-              echo "Created: $zip_filename.zip"
+              echo "Created single pack: $zip_filename.zip"
             fi
           done
 
-      - name: Upload build artifacts
+      - name: Upload single artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: character-packages
+          name: single-packages
           path: |
-            release_packages/*.zip
-            name_mapping/*.txt
+            release_packages/single/*.zip
+            name_mapping/single/*.txt
           if-no-files-found: error
 
   release:
     name: 发布并重命名
-    needs: build
+    needs: [build-game, build-single]
     runs-on: ubuntu-latest
     steps:
-      - name: Download build artifacts
+      - name: Download game artifacts
         uses: actions/download-artifact@v4
         with:
-          name: character-packages
-          path: packages
+          name: game-packages
+          path: packages/game
+
+      - name: Download single artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: single-packages
+          path: packages/single
 
       - name: Move files
         run: |
-          mv packages/release_packages/*.zip release_packages/ 2>/dev/null || true
-          mv packages/name_mapping/*.txt name_mapping/ 2>/dev/null || true
-        continue-on-error: true
+          mkdir -p release_packages name_mapping
+          mv packages/game/release_packages/game/*.zip release_packages/ 2>/dev/null || true
+          mv packages/game/name_mapping/game/*.txt name_mapping/ 2>/dev/null || true
+          mv packages/single/release_packages/single/*.zip release_packages/ 2>/dev/null || true
+          mv packages/single/name_mapping/single/*.txt name_mapping/ 2>/dev/null || true
 
       - name: Generate release notes
         run: |
           cat > release_notes.md << 'EOF'
           # AiChat Character Release
           
-          ## 角色包列表
+          ## 打包内容
+          
+          ### 按游戏分类
           EOF
           for zip_file in release_packages/*.zip; do
             if [ -f "$zip_file" ]; then
               filename=$(basename "$zip_file" .zip)
-              echo "- **${filename}**" >> release_notes.md
+              if [ -f "name_mapping/$filename.txt" ]; then
+                chinese_name=$(cat "name_mapping/$filename.txt")
+                if [[ "$chinese_name" != *"（"* ]]; then
+                  echo "- **${chinese_name}**" >> release_notes.md
+                fi
+              fi
+            fi
+          done
+          cat >> release_notes.md << 'EOF'
+          
+          ### 按角色分类
+          EOF
+          for zip_file in release_packages/*.zip; do
+            if [ -f "$zip_file" ]; then
+              filename=$(basename "$zip_file" .zip)
+              if [ -f "name_mapping/$filename.txt" ]; then
+                chinese_name=$(cat "name_mapping/$filename.txt")
+                if [[ "$chinese_name" == *"（"* ]]; then
+                  echo "- **${chinese_name}**" >> release_notes.md
+                fi
+              fi
             fi
           done
           cat >> release_notes.md << 'EOF'
@@ -143,25 +203,16 @@ jobs:
       - name: Rename release assets to Chinese
         run: |
           RELEASE_ID=${{ steps.create_release.outputs.id }}
-          
           for zip_file in release_packages/*.zip; do
             if [ -f "$zip_file" ]; then
               ascii_name=$(basename "$zip_file" .zip)
-              
-              # 从映射文件读取中文名
               if [ -f "name_mapping/$ascii_name.txt" ]; then
                 chinese_name=$(cat "name_mapping/$ascii_name.txt")
-                
                 if [ -n "$chinese_name" ] && [ "$chinese_name" != "$ascii_name" ]; then
                   echo "Renaming: $ascii_name.zip -> $chinese_name.zip"
-                  ASSET_ID=$(gh api "repos/${{ github.repository }}/releases/$RELEASE_ID/assets" \
-                    --jq ".[] | select(.name == \"$ascii_name.zip\") | .id")
-                  
+                  ASSET_ID=$(gh api "repos/${{ github.repository }}/releases/$RELEASE_ID/assets" --jq ".[] | select(.name == \"$ascii_name.zip\") | .id")
                   if [ -n "$ASSET_ID" ]; then
-                    gh api "repos/${{ github.repository }}/releases/assets/$ASSET_ID" \
-                      -X PATCH \
-                      -f name="$chinese_name.zip" \
-                      -f label="$chinese_name"
+                    gh api "repos/${{ github.repository }}/releases/assets/$ASSET_ID" -X PATCH -f name="$chinese_name.zip" -f label="$chinese_name"
                     echo "✓ Renamed: $chinese_name.zip"
                   else
                     echo "✗ Asset not found: $ascii_name.zip"
