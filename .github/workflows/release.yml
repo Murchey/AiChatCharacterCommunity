@@ -2,8 +2,10 @@ name: Release Character Packages
 
 on:
   push:
-    tags:
-      - 'v*'  # 只有 push v 开头的 tag 才触发
+    branches:
+      - main  # push 到 main 分支时触发
+    # paths:
+    #   - 'Characters/**'  # 只有 Characters 目录下的文件变化才触发
   workflow_dispatch:  # 允许手动触发
 
 permissions:
@@ -50,6 +52,7 @@ jobs:
         id: create_zips
         run: |
           mkdir -p release_packages
+          mkdir -p name_mapping
           IFS='|' read -ra CHAR_DIRS <<< "${{ steps.find_characters.outputs.characters }}"
           
           for char_dir in "${CHAR_DIRS[@]}"; do
@@ -58,6 +61,10 @@ jobs:
               
               zip_filename=$(python3 .github/scripts/to_camel.py "$char_name")
               zip_path="release_packages/$zip_filename.zip"
+              
+              # 保存映射关系
+              echo "$char_name" > "name_mapping/$zip_filename.txt"
+              
               cd "$(dirname "$char_dir")"
               zip -r "../../$zip_path" "$char_name/"
               cd - > /dev/null
@@ -69,7 +76,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: character-packages
-          path: release_packages/*.zip
+          path: |
+            release_packages/*.zip
+            name_mapping/*.txt
           if-no-files-found: error
 
   release:
@@ -81,7 +90,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: character-packages
-          path: release_packages
+          path: packages
+
+      - name: Move files
+        run: |
+          mv packages/release_packages/*.zip release_packages/ 2>/dev/null || true
+          mv packages/name_mapping/*.txt name_mapping/ 2>/dev/null || true
+        continue-on-error: true
 
       - name: Generate release notes
         run: |
@@ -132,22 +147,28 @@ jobs:
           for zip_file in release_packages/*.zip; do
             if [ -f "$zip_file" ]; then
               ascii_name=$(basename "$zip_file" .zip)
-              chinese_name=$(unzip -l "$zip_file" | head -5 | grep -oP '(?<=  )[^/]+(?=/)' | head -1)
               
-              if [ -n "$chinese_name" ]; then
-                echo "Renaming: $ascii_name.zip -> $chinese_name.zip"
-                ASSET_ID=$(gh api "repos/${{ github.repository }}/releases/$RELEASE_ID/assets" \
-                  --jq ".[] | select(.name == \"$ascii_name.zip\") | .id")
+              # 从映射文件读取中文名
+              if [ -f "name_mapping/$ascii_name.txt" ]; then
+                chinese_name=$(cat "name_mapping/$ascii_name.txt")
                 
-                if [ -n "$ASSET_ID" ]; then
-                  gh api "repos/${{ github.repository }}/releases/assets/$ASSET_ID" \
-                    -X PATCH \
-                    -f name="$chinese_name.zip" \
-                    -f label="$chinese_name"
-                  echo "✓ Renamed: $chinese_name.zip"
-                else
-                  echo "✗ Asset not found: $ascii_name.zip"
+                if [ -n "$chinese_name" ] && [ "$chinese_name" != "$ascii_name" ]; then
+                  echo "Renaming: $ascii_name.zip -> $chinese_name.zip"
+                  ASSET_ID=$(gh api "repos/${{ github.repository }}/releases/$RELEASE_ID/assets" \
+                    --jq ".[] | select(.name == \"$ascii_name.zip\") | .id")
+                  
+                  if [ -n "$ASSET_ID" ]; then
+                    gh api "repos/${{ github.repository }}/releases/assets/$ASSET_ID" \
+                      -X PATCH \
+                      -f name="$chinese_name.zip" \
+                      -f label="$chinese_name"
+                    echo "✓ Renamed: $chinese_name.zip"
+                  else
+                    echo "✗ Asset not found: $ascii_name.zip"
+                  fi
                 fi
+              else
+                echo "✗ Mapping not found: $ascii_name.txt"
               fi
             fi
           done
