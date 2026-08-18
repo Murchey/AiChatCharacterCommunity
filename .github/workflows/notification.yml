@@ -1,0 +1,86 @@
+﻿name: Update Notification
+
+on:
+  push:
+    branches:
+      - main  # push 到 main 分支时触发
+  workflow_dispatch:  # 允许手动触发
+
+permissions:
+  contents: write
+
+jobs:
+  update-notification:
+    name: 更新通知
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 获取所有历史记录
+
+      - name: Get commit info
+        id: commit_info
+        run: |
+          COMMIT_TITLE=$(git log -1 --pretty=format:"%s")
+          COMMIT_AUTHOR=$(git log -1 --pretty=format:"%an")
+          COMMIT_DATE=$(git log -1 --pretty=format:"%ci")
+          COMMIT_HASH=$(git log -1 --pretty=format:"%h")
+          echo "title=$COMMIT_TITLE" >> $GITHUB_OUTPUT
+          echo "author=$COMMIT_AUTHOR" >> $GITHUB_OUTPUT
+          echo "date=$COMMIT_DATE" >> $GITHUB_OUTPUT
+          echo "hash=$COMMIT_HASH" >> $GITHUB_OUTPUT
+
+      - name: Generate release notes
+        run: |
+          cat > release_notes.md << EOF
+          # 【更新通知】
+          
+          ## 最新更新
+          
+          **提交信息：** ${{ steps.commit_info.outputs.title }}
+          
+          **提交者：** ${{ steps.commit_info.outputs.author }}
+          
+          **提交时间：** ${{ steps.commit_info.outputs.date }}
+          
+          **提交哈希：** ${{ steps.commit_info.outputs.hash }}
+          
+          ---
+          
+          ## 历史更新记录
+          EOF
+          
+          # 获取最近 10 条提交记录
+          git log --pretty=format:"- %s (%h, %ci)" -10 >> release_notes.md
+          
+          cat >> release_notes.md << 'EOF'
+          
+          ---
+          
+          ## 说明
+          
+          此 Release 用于显示最新的更新通知，每次 commit 都会自动更新。
+          
+          其他 Release：
+          - [V1.0.0（游戏分类角色包）](./tag/V1.0.0)
+          - [V1.1.0（角色分类角色包）](./tag/V1.1.0)
+          EOF
+
+      - name: Delete existing release V1.2.0
+        run: |
+          gh release delete "V1.2.0" --yes --cleanup-tag -R "${{ github.repository }}" 2>/dev/null || true
+          gh api "repos/${{ github.repository }}/git/refs/tags/V1.2.0" -X DELETE 2>/dev/null || true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create release V1.2.0
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: V1.2.0
+          name: "【更新通知】"
+          body_path: release_notes.md
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
