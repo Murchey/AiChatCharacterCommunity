@@ -1,0 +1,173 @@
+name: Release Character Packages
+
+on:
+  push:
+    tags:
+      - 'v*'  # 只有 push v 开头的 tag 才触发
+  workflow_dispatch:  # 允许手动触发
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: 打包角色
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install pypinyin
+        run: pip install pypinyin
+
+      - name: Find character directories
+        id: find_characters
+        run: |
+          CHARACTER_LIST=""
+          for game_dir in Characters/*/; do
+            if [ -d "$game_dir" ]; then
+              for char_dir in "$game_dir"*/; do
+                if [ -d "$char_dir" ] && [ -f "$char_dir/Profile.json" ]; then
+                  char_name=$(basename "$char_dir")
+                  if [ -n "$CHARACTER_LIST" ]; then
+                    CHARACTER_LIST="$CHARACTER_LIST|$char_dir"
+                  else
+                    CHARACTER_LIST="$char_dir"
+                  fi
+                  echo "Found: $char_name"
+                fi
+              done
+            fi
+          done
+          echo "characters=$CHARACTER_LIST" >> $GITHUB_OUTPUT
+
+      - name: Create character zip packages
+        id: create_zips
+        run: |
+          mkdir -p release_packages
+          IFS='|' read -ra CHAR_DIRS <<< "${{ steps.find_characters.outputs.characters }}"
+          
+          for char_dir in "${CHAR_DIRS[@]}"; do
+            if [ -d "$char_dir" ]; then
+              char_name=$(basename "$char_dir")
+              
+              zip_filename=$(python3 -c "
+import re
+from pypinyin import pinyin, Style
+def to_camel(name):
+    parts = []
+    for seg in re.split(r'([\x00-\x7f]+)', name):
+        if not seg:
+            continue
+        if seg.isascii():
+            cleaned = re.sub(r'[^A-Za-z0-9._-]', '', seg)
+            if cleaned:
+                parts.append(cleaned)
+        else:
+            camel = ''.join(s[0].capitalize() for s in pinyin(seg, style=Style.NORMAL) if s[0] and all(ord(c) < 128 and c.isalnum() for c in s[0]))
+            if camel:
+                parts.append(camel)
+    return '_'.join(parts)
+print(to_camel('$char_name'))
+")
+              zip_path="release_packages/$zip_filename.zip"
+              cd "$(dirname "$char_dir")"
+              zip -r "../../$zip_path" "$char_name/"
+              cd - > /dev/null
+              echo "Created: $zip_filename.zip"
+            fi
+          done
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: character-packages
+          path: release_packages/*.zip
+          if-no-files-found: error
+
+  release:
+    name: 发布并重命名
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: character-packages
+          path: release_packages
+
+      - name: Generate release notes
+        run: |
+          cat > release_notes.md << 'EOF'
+          # AiChat Character Release
+          
+          ## 角色包列表
+          EOF
+          for zip_file in release_packages/*.zip; do
+            if [ -f "$zip_file" ]; then
+              filename=$(basename "$zip_file" .zip)
+              echo "- **${filename}**" >> release_notes.md
+            fi
+          done
+          cat >> release_notes.md << 'EOF'
+          
+          ## 使用方法
+          
+          1. 下载你想要的角色 zip 文件
+          2. 在 App 中进入 **【我】→ 导入角色包**
+          3. 选择下载的 zip 文件并勾选要导入的角色
+          
+          ## 注意事项
+          
+          - 文本文件建议使用 UTF-8 编码
+          - zip 中必须包含至少一个带 Profile.json 的角色文件夹
+          - 文件层级不要过深
+          EOF
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Character Release ${{ github.ref_name }}
+          body_path: release_notes.md
+          files: release_packages/*.zip
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Rename release assets to Chinese
+        run: |
+          RELEASE_ID=${{ steps.create_release.outputs.id }}
+          
+          for zip_file in release_packages/*.zip; do
+            if [ -f "$zip_file" ]; then
+              ascii_name=$(basename "$zip_file" .zip)
+              chinese_name=$(unzip -l "$zip_file" | head -5 | grep -oP '(?<=  )[^/]+(?=/)' | head -1)
+              
+              if [ -n "$chinese_name" ]; then
+                echo "Renaming: $ascii_name.zip -> $chinese_name.zip"
+                ASSET_ID=$(gh api "repos/${{ github.repository }}/releases/$RELEASE_ID/assets" \
+                  --jq ".[] | select(.name == \"$ascii_name.zip\") | .id")
+                
+                if [ -n "$ASSET_ID" ]; then
+                  gh api "repos/${{ github.repository }}/releases/assets/$ASSET_ID" \
+                    -X PATCH \
+                    -f name="$chinese_name.zip" \
+                    -f label="$chinese_name"
+                  echo "✓ Renamed: $chinese_name.zip"
+                else
+                  echo "✗ Asset not found: $ascii_name.zip"
+                fi
+              fi
+            fi
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
