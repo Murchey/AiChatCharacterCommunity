@@ -27,13 +27,13 @@ jobs:
 
       - name: Create game zip packages
         run: |
-          mkdir -p release_packages/game name_mapping/game
+          mkdir -p release_packages name_mapping
           for game_dir in Characters/*/; do
             if [ -d "$game_dir" ]; then
               game_name=$(basename "$game_dir")
               zip_filename=$(python3 .github/scripts/to_camel.py "$game_name")
-              zip_path="release_packages/game/$zip_filename.zip"
-              echo "$game_name" > "name_mapping/game/$zip_filename.txt"
+              zip_path="release_packages/$zip_filename.zip"
+              echo "$game_name" > "name_mapping/$zip_filename.txt"
               cd Characters
               zip -r "../$zip_path" "$game_name/"
               cd ..
@@ -46,8 +46,8 @@ jobs:
         with:
           name: game-packages
           path: |
-            release_packages/game/*.zip
-            name_mapping/game/*.txt
+            release_packages/*.zip
+            name_mapping/*.txt
           if-no-files-found: error
 
   build-single:
@@ -87,14 +87,14 @@ jobs:
 
       - name: Create single zip packages
         run: |
-          mkdir -p release_packages/single name_mapping/single
+          mkdir -p release_packages name_mapping
           IFS='|' read -ra CHAR_DIRS <<< "${{ steps.find_characters.outputs.characters }}"
           for char_dir in "${CHAR_DIRS[@]}"; do
             if [ -d "$char_dir" ]; then
               char_name=$(basename "$char_dir")
               zip_filename=$(python3 .github/scripts/to_camel.py "$char_name")
-              zip_path="release_packages/single/$zip_filename.zip"
-              echo "$char_name" > "name_mapping/single/$zip_filename.txt"
+              zip_path="release_packages/$zip_filename.zip"
+              echo "$char_name" > "name_mapping/$zip_filename.txt"
               cd "$(dirname "$char_dir")"
               zip -r "../../$zip_path" "$char_name/"
               cd - > /dev/null
@@ -107,67 +107,42 @@ jobs:
         with:
           name: single-packages
           path: |
-            release_packages/single/*.zip
-            name_mapping/single/*.txt
+            release_packages/*.zip
+            name_mapping/*.txt
           if-no-files-found: error
 
-  release:
-    name: 发布并重命名
-    needs: [build-game, build-single]
+  release-game:
+    name: 发布游戏分类 Release（V1.0.0）
+    needs: build-game
     runs-on: ubuntu-latest
     steps:
       - name: Download game artifacts
         uses: actions/download-artifact@v4
         with:
           name: game-packages
-          path: packages/game
-
-      - name: Download single artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: single-packages
-          path: packages/single
+          path: packages
 
       - name: Move files
         run: |
           mkdir -p release_packages name_mapping
-          mv packages/game/release_packages/game/*.zip release_packages/ 2>/dev/null || true
-          mv packages/game/name_mapping/game/*.txt name_mapping/ 2>/dev/null || true
-          mv packages/single/release_packages/single/*.zip release_packages/ 2>/dev/null || true
-          mv packages/single/name_mapping/single/*.txt name_mapping/ 2>/dev/null || true
+          mv packages/release_packages/*.zip release_packages/ 2>/dev/null || true
+          mv packages/name_mapping/*.txt name_mapping/ 2>/dev/null || true
 
       - name: Generate release notes
         run: |
           cat > release_notes.md << 'EOF'
-          # AiChat Character Release
+          # 游戏分类角色包
           
-          ## 打包内容
+          按游戏分类的角色包，每个 zip 包含该游戏下的所有角色。
           
-          ### 按游戏分类
+          ## 角色包列表
           EOF
           for zip_file in release_packages/*.zip; do
             if [ -f "$zip_file" ]; then
               filename=$(basename "$zip_file" .zip)
               if [ -f "name_mapping/$filename.txt" ]; then
                 chinese_name=$(cat "name_mapping/$filename.txt")
-                if [[ "$chinese_name" != *"（"* ]]; then
-                  echo "- **${chinese_name}**" >> release_notes.md
-                fi
-              fi
-            fi
-          done
-          cat >> release_notes.md << 'EOF'
-          
-          ### 按角色分类
-          EOF
-          for zip_file in release_packages/*.zip; do
-            if [ -f "$zip_file" ]; then
-              filename=$(basename "$zip_file" .zip)
-              if [ -f "name_mapping/$filename.txt" ]; then
-                chinese_name=$(cat "name_mapping/$filename.txt")
-                if [[ "$chinese_name" == *"（"* ]]; then
-                  echo "- **${chinese_name}**" >> release_notes.md
-                fi
+                echo "- **${chinese_name}**" >> release_notes.md
               fi
             fi
           done
@@ -186,17 +161,23 @@ jobs:
           - 文件层级不要过深
           EOF
 
-      - name: Create GitHub Release
+      - name: Delete existing release V1.0.0
+        run: |
+          gh release delete "V1.0.0" --yes --cleanup-tag -R "${{ github.repository }}" 2>/dev/null || true
+          gh api "repos/${{ github.repository }}/git/refs/tags/V1.0.0" -X DELETE 2>/dev/null || true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create release V1.0.0
         id: create_release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}
-          name: Character Release ${{ github.ref_name }}
+          tag_name: V1.0.0
+          name: 游戏分类角色包 V1.0.0
           body_path: release_notes.md
           files: release_packages/*.zip
           draft: false
           prerelease: false
-          generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -214,14 +195,102 @@ jobs:
                   if [ -n "$ASSET_ID" ]; then
                     gh api "repos/${{ github.repository }}/releases/assets/$ASSET_ID" -X PATCH -f name="$chinese_name.zip" -f label="$chinese_name"
                     echo "✓ Renamed: $chinese_name.zip"
-                  else
-                    echo "✗ Asset not found: $ascii_name.zip"
                   fi
                 fi
-              else
-                echo "✗ Mapping not found: $ascii_name.txt"
               fi
             fi
           done
         env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  release-single:
+    name: 发布角色分类 Release（V1.1.0）
+    needs: build-single
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download single artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: single-packages
+          path: packages
+
+      - name: Move files
+        run: |
+          mkdir -p release_packages name_mapping
+          mv packages/release_packages/*.zip release_packages/ 2>/dev/null || true
+          mv packages/name_mapping/*.txt name_mapping/ 2>/dev/null || true
+
+      - name: Generate release notes
+        run: |
+          cat > release_notes.md << 'EOF'
+          # 角色分类角色包
+          
+          按角色分类的角色包，每个 zip 包含一个角色。
+          
+          ## 角色包列表
+          EOF
+          for zip_file in release_packages/*.zip; do
+            if [ -f "$zip_file" ]; then
+              filename=$(basename "$zip_file" .zip)
+              if [ -f "name_mapping/$filename.txt" ]; then
+                chinese_name=$(cat "name_mapping/$filename.txt")
+                echo "- **${chinese_name}**" >> release_notes.md
+              fi
+            fi
+          done
+          cat >> release_notes.md << 'EOF'
+          
+          ## 使用方法
+          
+          1. 下载你想要的角色 zip 文件
+          2. 在 App 中进入 **【我】→ 导入角色包**
+          3. 选择下载的 zip 文件并勾选要导入的角色
+          
+          ## 注意事项
+          
+          - 文本文件建议使用 UTF-8 编码
+          - zip 中必须包含至少一个带 Profile.json 的角色文件夹
+          - 文件层级不要过深
+          EOF
+
+      - name: Delete existing release V1.1.0
+        run: |
+          gh release delete "V1.1.0" --yes --cleanup-tag -R "${{ github.repository }}" 2>/dev/null || true
+          gh api "repos/${{ github.repository }}/git/refs/tags/V1.1.0" -X DELETE 2>/dev/null || true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create release V1.1.0
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: V1.1.0
+          name: 角色分类角色包 V1.1.0
+          body_path: release_notes.md
+          files: release_packages/*.zip
+          draft: false
+          prerelease: false
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Rename release assets to Chinese
+        run: |
+          RELEASE_ID=${{ steps.create_release.outputs.id }}
+          for zip_file in release_packages/*.zip; do
+            if [ -f "$zip_file" ]; then
+              ascii_name=$(basename "$zip_file" .zip)
+              if [ -f "name_mapping/$ascii_name.txt" ]; then
+                chinese_name=$(cat "name_mapping/$ascii_name.txt")
+                if [ -n "$chinese_name" ] && [ "$chinese_name" != "$ascii_name" ]; then
+                  echo "Renaming: $ascii_name.zip -> $chinese_name.zip"
+                  ASSET_ID=$(gh api "repos/${{ github.repository }}/releases/$RELEASE_ID/assets" --jq ".[] | select(.name == \"$ascii_name.zip\") | .id")
+                  if [ -n "$ASSET_ID" ]; then
+                    gh api "repos/${{ github.repository }}/releases/assets/$ASSET_ID" -X PATCH -f name="$chinese_name.zip" -f label="$chinese_name"
+                    echo "✓ Renamed: $chinese_name.zip"
+                  fi
+                fi
+              fi
+            fi
+          done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
