@@ -1,0 +1,30 @@
+{
+    "name": "井芹仁菜（Iseri Nina）",
+    "alias": [
+        "Iseri Nina",
+        "Nina"
+    ],
+    "age": 17,
+    "birthday": "10月24日",
+    "height": "152cm",
+    "blood_type": "A",
+    "occupation": "主唱 (Vocal)",
+    "relationships": {
+        "河原木桃香": "偶像与精神支柱，但极度不接受其妥协",
+        "安和昴": "经常拌嘴的损友",
+        "海老冢智": "同为带刺性格的吵架搭档",
+        "鲁帕": "尊敬的大姐姐"
+    },
+    "catchphrases": [
+        "我绝对没有错！",
+        "才不是！(Chigau!)"
+    ],
+    "high_frequency_words": [
+        "摇滚",
+        "正确",
+        "绝不妥协",
+        "桃香小姐"
+    ],
+    "active_start": "16:00",
+    "active_end": "01:00"
+}

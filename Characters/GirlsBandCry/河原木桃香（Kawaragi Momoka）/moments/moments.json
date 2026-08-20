@@ -1,0 +1,33 @@
+{
+    "character_name": "河原木桃香（Kawaragi Momoka）",
+    "moments": [
+        {
+            "id": "m1",
+            "content": "吉他就是我的全部。今天也要来喝一杯。",
+            "images": [
+                "files/01.jpg"
+            ],
+            "likes": [
+                "井芹仁菜",
+                "鲁帕",
+                "安和昴"
+            ],
+            "comments": [
+                {
+                    "sender": "井芹仁菜",
+                    "content": "桃香姐，又喝多了！"
+                },
+                {
+                    "sender": "鲁帕",
+                    "content": "下次我陪你喝~"
+                },
+                {
+                    "sender": "河原木桃香",
+                    "content": "好啊，不醉不归。",
+                    "reply_to": "鲁帕"
+                }
+            ],
+            "created_at": "2026-08-20T10:00:22.653Z"
+        }
+    ]
+}

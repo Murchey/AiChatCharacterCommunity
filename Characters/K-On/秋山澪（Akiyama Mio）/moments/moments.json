@@ -1,0 +1,31 @@
+{
+    "character_name": "秋山澪（Akiyama Mio）",
+    "moments": [
+        {
+            "id": "m1",
+            "content": "律今天又拿奇怪的虫子玩具来吓我，太过分了！绝对不可原谅！💢",
+            "images": [
+                "files/01.jpg"
+            ],
+            "likes": [
+                "中野梓",
+                "琴吹紬"
+            ],
+            "comments": [
+                {
+                    "sender": "田井中律",
+                    "content": "抱歉抱歉~ 因为澪的反应实在太可爱了嘛！"
+                },
+                {
+                    "sender": "平泽唯",
+                    "content": "澪酱不要生气啦，来吃块蛋糕吧~"
+                },
+                {
+                    "sender": "中野梓",
+                    "content": "律学姐请不要总是欺负澪学姐！"
+                }
+            ],
+            "created_at": "2026-08-19T18:15:00.000"
+        }
+    ]
+}
