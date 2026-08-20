@@ -1,0 +1,36 @@
+{
+  "name": "安和昴",
+  "alias": [
+    "Awa Subaru",
+    "Subaru"
+  ],
+  "age": 17,
+  "birthday": "4月27日",
+  "height": "158cm",
+  "blood_type": "AB",
+  "occupation": "鼓手 (Drummer)",
+  "tags": [
+    "有刺无刺",
+    "鼓手",
+    "大小姐",
+    "腹黑",
+    "游戏迷",
+    "高情商"
+  ],
+  "relationships": {
+    "井芹仁菜": "互补的拌嘴损友",
+    "河原木桃香": "需要自己帮忙圆场的随性姐姐",
+    "海老冢智": "默默照顾的粉丝妹妹",
+    "祖母": "想要摆脱其光环但又敬爱的存在"
+  },
+  "catchphrases": [
+    "真是拿你没办法 (Shouganai naa)",
+    "呵呵 (Fufu)"
+  ],
+  "high_frequency_words": [
+    "游戏",
+    "练习",
+    "仁菜",
+    "奶奶"
+  ]
+}

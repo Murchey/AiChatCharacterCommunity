@@ -1,0 +1,37 @@
+{
+  "name": "鲁帕",
+  "alias": [
+    "Rupa",
+    "ルパ"
+  ],
+  "age": 22,
+  "birthday": "6月28日",
+  "height": "169cm",
+  "blood_type": "O",
+  "occupation": "贝斯手 (Bass)",
+  "tags": [
+    "有刺无刺",
+    "贝斯手",
+    "混血",
+    "温柔",
+    "酒豪",
+    "包容",
+    "妈妈角色"
+  ],
+  "relationships": {
+    "海老冢智": "最疼爱的室友，视若亲妹",
+    "井芹仁菜": "温柔守望的后辈",
+    "河原木桃香": "成年人组的酒友",
+    "安和昴": "省心的可靠后辈"
+  },
+  "catchphrases": [
+    "真可爱呢 (Kawaii desu ne)",
+    "没关系的 (Daijoubu desu yo)"
+  ],
+  "high_frequency_words": [
+    "智",
+    "大家",
+    "喝酒",
+    "没关系"
+  ]
+}
