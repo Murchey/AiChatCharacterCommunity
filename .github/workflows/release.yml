@@ -181,25 +181,75 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: List release assets before renaming
+        run: |
+          echo "=== All Release Assets ==="
+          gh api "repos/${{ github.repository }}/releases/${{ steps.create_release.outputs.id }}/assets" \
+            --jq '.[] | {name, id}'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
       - name: Rename release assets to Chinese
         run: |
           RELEASE_ID=${{ steps.create_release.outputs.id }}
+          RENAMED=0
+          SKIPPED=0
+          
+          # Create lookup map from name_mapping files
+          declare -A CHAR_MAP
+          while IFS= read -r -d '' txt_file; do
+            ascii_name=$(basename "$txt_file" .txt)
+            chinese_name=$(tr -d '\n\r' < "$txt_file")
+            CHAR_MAP["$ascii_name"]="$chinese_name"
+          done < <(find name_mapping -name "*.txt" -print0)
+          
+          # Process each zip file
           for zip_file in release_packages/*.zip; do
             if [ -f "$zip_file" ]; then
               ascii_name=$(basename "$zip_file" .zip)
-              if [ -f "name_mapping/$ascii_name.txt" ]; then
-                chinese_name=$(cat "name_mapping/$ascii_name.txt")
+              if [ -n "${CHAR_MAP[$ascii_name]+_}" ]; then
+                chinese_name="${CHAR_MAP[$ascii_name]}"
                 if [ -n "$chinese_name" ] && [ "$chinese_name" != "$ascii_name" ]; then
                   echo "Renaming: $ascii_name.zip -> $chinese_name.zip"
-                  ASSET_ID=$(gh api "repos/${{ github.repository }}/releases/$RELEASE_ID/assets" --jq ".[] | select(.name == \"$ascii_name.zip\") | .id")
-                  if [ -n "$ASSET_ID" ]; then
-                    gh api "repos/${{ github.repository }}/releases/assets/$ASSET_ID" -X PATCH -f name="$chinese_name.zip" -f label="$chinese_name"
-                    echo "✓ Renamed: $chinese_name.zip"
+                  
+                  # Get all assets and find matching one by iterating
+                  FOUND=false
+                  while IFS='|' read -r asset_name asset_id; do
+                    if [ "$asset_name" = "$ascii_name.zip" ]; then
+                      FOUND=true
+                      echo "Found asset ID: $asset_id for $ascii_name.zip"
+                      if gh api "repos/${{ github.repository }}/releases/assets/$asset_id" \
+                        -X PATCH -F name="$chinese_name.zip" -F label="$chinese_name" 2>&1; then
+                        echo "\u2713 Renamed: $chinese_name.zip"
+                        ((RENAMED++))
+                      else
+                        echo "\u26a0 Failed to rename: $ascii_name.zip"
+                        ((SKIPPED++))
+                      fi
+                      break
+                    fi
+                  done < <(gh api "repos/${{ github.repository }}/releases/$RELEASE_ID/assets" \
+                    --jq '.[] | [.name, (.id | tostring)] | join("|")')
+                  
+                  if [ "$FOUND" = false ]; then
+                    echo "\u26a0 Asset not found: $ascii_name.zip"
+                    ((SKIPPED++))
                   fi
+                else
+                  echo "SKIP: Already correct for $ascii_name"
                 fi
+              else
+                echo "\u26a0 No mapping found: $ascii_name.zip"
+                ((SKIPPED++))
               fi
             fi
           done
+          
+          echo ""
+          echo "=== Summary ==="
+          echo "Renamed: $RENAMED"
+          echo "Skipped: $SKIPPED"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -273,24 +323,74 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: List release assets before renaming
+        run: |
+          echo "=== All Release Assets ==="
+          gh api "repos/${{ github.repository }}/releases/${{ steps.create_release.outputs.id }}/assets" \
+            --jq '.[] | {name, id}'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
       - name: Rename release assets to Chinese
         run: |
           RELEASE_ID=${{ steps.create_release.outputs.id }}
+          RENAMED=0
+          SKIPPED=0
+          
+          # Create lookup map from name_mapping files
+          declare -A CHAR_MAP
+          while IFS= read -r -d '' txt_file; do
+            ascii_name=$(basename "$txt_file" .txt)
+            chinese_name=$(tr -d '\n\r' < "$txt_file")
+            CHAR_MAP["$ascii_name"]="$chinese_name"
+          done < <(find name_mapping -name "*.txt" -print0)
+          
+          # Process each zip file
           for zip_file in release_packages/*.zip; do
             if [ -f "$zip_file" ]; then
               ascii_name=$(basename "$zip_file" .zip)
-              if [ -f "name_mapping/$ascii_name.txt" ]; then
-                chinese_name=$(cat "name_mapping/$ascii_name.txt")
+              if [ -n "${CHAR_MAP[$ascii_name]+_}" ]; then
+                chinese_name="${CHAR_MAP[$ascii_name]}"
                 if [ -n "$chinese_name" ] && [ "$chinese_name" != "$ascii_name" ]; then
                   echo "Renaming: $ascii_name.zip -> $chinese_name.zip"
-                  ASSET_ID=$(gh api "repos/${{ github.repository }}/releases/$RELEASE_ID/assets" --jq ".[] | select(.name == \"$ascii_name.zip\") | .id")
-                  if [ -n "$ASSET_ID" ]; then
-                    gh api "repos/${{ github.repository }}/releases/assets/$ASSET_ID" -X PATCH -f name="$chinese_name.zip" -f label="$chinese_name"
-                    echo "✓ Renamed: $chinese_name.zip"
+                  
+                  # Get all assets and find matching one by iterating
+                  FOUND=false
+                  while IFS='|' read -r asset_name asset_id; do
+                    if [ "$asset_name" = "$ascii_name.zip" ]; then
+                      FOUND=true
+                      echo "Found asset ID: $asset_id for $ascii_name.zip"
+                      if gh api "repos/${{ github.repository }}/releases/assets/$asset_id" \
+                        -X PATCH -F name="$chinese_name.zip" -F label="$chinese_name" 2>&1; then
+                        echo "\u2713 Renamed: $chinese_name.zip"
+                        ((RENAMED++))
+                      else
+                        echo "\u26a0 Failed to rename: $ascii_name.zip"
+                        ((SKIPPED++))
+                      fi
+                      break
+                    fi
+                  done < <(gh api "repos/${{ github.repository }}/releases/$RELEASE_ID/assets" \
+                    --jq '.[] | [.name, (.id | tostring)] | join("|")')
+                  
+                  if [ "$FOUND" = false ]; then
+                    echo "\u26a0 Asset not found: $ascii_name.zip"
+                    ((SKIPPED++))
                   fi
+                else
+                  echo "SKIP: Already correct for $ascii_name"
                 fi
+              else
+                echo "\u26a0 No mapping found: $ascii_name.zip"
+                ((SKIPPED++))
               fi
             fi
           done
+          
+          echo ""
+          echo "=== Summary ==="
+          echo "Renamed: $RENAMED"
+          echo "Skipped: $SKIPPED"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
