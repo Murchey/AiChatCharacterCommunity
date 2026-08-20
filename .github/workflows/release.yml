@@ -219,8 +219,12 @@ jobs:
                     if [ "$asset_name" = "$ascii_name.zip" ]; then
                       FOUND=true
                       echo "Found asset ID: $asset_id for $ascii_name.zip"
-                      if gh api "repos/${{ github.repository }}/releases/assets/$asset_id" \
-                        -X PATCH -F name="$chinese_name.zip" -F label="$chinese_name" 2>&1; then
+                      response=$(curl -s -o /dev/null -w "%{http_code}" -X PATCH \
+                          "https://api.github.com/repos/${{ github.repository }}/releases/assets/$asset_id" \
+                          -H "Authorization: Bearer $GH_TOKEN" \
+                          -H "Accept: application/vnd.github.v3+json" \
+                          -d '{"name": "$chinese_name.zip", "label": "$chinese_name"}')
+                      if [ "$response" = "200" ] || [ "$response" = "201" ]; then
                         echo "\u2713 Renamed: $chinese_name.zip"
                         ((RENAMED++))
                       else
@@ -361,8 +365,12 @@ jobs:
                     if [ "$asset_name" = "$ascii_name.zip" ]; then
                       FOUND=true
                       echo "Found asset ID: $asset_id for $ascii_name.zip"
-                      if gh api "repos/${{ github.repository }}/releases/assets/$asset_id" \
-                        -X PATCH -F name="$chinese_name.zip" -F label="$chinese_name" 2>&1; then
+                      response=$(curl -s -o /dev/null -w "%{http_code}" -X PATCH \
+                          "https://api.github.com/repos/${{ github.repository }}/releases/assets/$asset_id" \
+                          -H "Authorization: Bearer $GH_TOKEN" \
+                          -H "Accept: application/vnd.github.v3+json" \
+                          -d '{"name": "$chinese_name.zip", "label": "$chinese_name"}')
+                      if [ "$response" = "200" ] || [ "$response" = "201" ]; then
                         echo "\u2713 Renamed: $chinese_name.zip"
                         ((RENAMED++))
                       else
