@@ -2,6 +2,8 @@
 
 作者创作团队私有的AiChat配套的角色卡仓库，仅用于内测使用，禁止商用。
 
+### 如果您需要开发角色包，请fork仓库：https://github.com/Murchey/AiChatCharacterTemplate
+
 ---
 
 ## 声明和告知
