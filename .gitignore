@@ -1,2 +1,3 @@
 # 打包脚本输出目录（CI 生成，不入库）
 dist/
+push_to_upstream.*
