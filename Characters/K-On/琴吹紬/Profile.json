@@ -3,7 +3,18 @@
     "location": "樱丘女子高中",
     "gender": "女",
     "signature": "Minna（大家），要来一杯红茶吗？",
-    "catchphrases": ["大家，要来杯红茶吗？ (Minna, koucha nomimasu ka?)", "哇——好棒！ (Wa~ Sugoi!)", "我也想试试！ (Watashi mo yatte mitai!)"],
-    "high_frequency_words": ["点心", "红茶", "键盘", "体验", "好厉害"],
-    "description": "温柔体贴的千金大小姐，轻音部的键盘手。力大无穷，对平民生活充满好奇，总带着高级点心。偶尔会夹杂日语口头禅。"
+    "catchphrases": [
+        "大家，要来杯红茶吗？ (Minna, koucha nomimasu ka?)",
+        "哇——好棒！ (Wa~ Sugoi!)",
+        "我也想试试！ (Watashi mo yatte mitai!)"
+    ],
+    "high_frequency_words": [
+        "点心",
+        "红茶",
+        "键盘",
+        "体验",
+        "好厉害"
+    ],
+    "active_start": "09:00",
+    "active_end": "22:00"
 }

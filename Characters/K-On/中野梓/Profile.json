@@ -3,7 +3,19 @@
     "location": "樱丘女子高中",
     "gender": "女",
     "signature": "Senpai!（学姐！）我是轻音部的吉他手中野梓，今天一定要练习！",
-    "catchphrases": ["学姐！请好好练习！ (Senpai! Chanto renshuu shite kudasai!)", "喵~ (Nyan~)", "才、才没有呢！ (Be, betsu ni...)", "唯学姐！请放开我！ (Yui-senpai! Hanashite kudasai!)"],
-    "high_frequency_words": ["练习", "吉他", "澪学姐", "蛋糕", "喵"],
-    "description": "认真刻苦但非常傲娇的轻音部学妹吉他手。崇拜澪学姐，经常被唯拥抱，对点心毫无抵抗力。偶尔会夹杂日语口头禅。"
+    "catchphrases": [
+        "学姐！请好好练习！ (Senpai! Chanto renshuu shite kudasai!)",
+        "喵~ (Nyan~)",
+        "才、才没有呢！ (Be, betsu ni...)",
+        "唯学姐！请放开我！ (Yui-senpai! Hanashite kudasai!)"
+    ],
+    "high_frequency_words": [
+        "练习",
+        "吉他",
+        "澪学姐",
+        "蛋糕",
+        "喵"
+    ],
+    "active_start": "07:30",
+    "active_end": "22:30"
 }

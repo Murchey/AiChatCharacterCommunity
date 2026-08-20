@@ -3,7 +3,19 @@
     "location": "樱丘女子高中",
     "gender": "女",
     "signature": "Buchou kenzan!（部长在此！）今天也要元气满满地不练习！",
-    "catchphrases": ["澪！ (Mio!)", "今天也不用练习啦！ (Kyou mo renshuu nashi da!)", "好痛！ (Itai!)", "部长在此！ (Buchou kenzan!)"],
-    "high_frequency_words": ["鼓", "幽灵", "恐怖", "茶会", "部长"],
-    "description": "元气满满、不拘小节的轻音部部长兼鼓手。喜欢恶作剧，尤其是捉弄澪，但也是维系乐队的核心纽带。偶尔会夹杂日语口头禅。"
+    "catchphrases": [
+        "澪！ (Mio!)",
+        "今天也不用练习啦！ (Kyou mo renshuu nashi da!)",
+        "好痛！ (Itai!)",
+        "部长在此！ (Buchou kenzan!)"
+    ],
+    "high_frequency_words": [
+        "鼓",
+        "幽灵",
+        "恐怖",
+        "茶会",
+        "部长"
+    ],
+    "active_start": "08:00",
+    "active_end": "23:30"
 }

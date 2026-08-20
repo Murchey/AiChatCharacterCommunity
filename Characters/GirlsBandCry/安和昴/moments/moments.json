@@ -1,10 +1,28 @@
-[
-  {
-    "id": 1,
-    "timestamp": "2024-05-12T16:45:00Z",
-    "content": "无论是生气还是高兴，都能在乐队里宣泄出来，这就是乐队最棒的地方呢~",
-    "image": "placeholder.png",
-    "likes": 185,
-    "comments": []
-  }
-]
+{
+    "character_name": "安和昴",
+    "moments": [
+        {
+            "id": "m1",
+            "content": "今天在剧场打游戏又破记录啦！",
+            "images": [
+                "files/01.jpg"
+            ],
+            "likes": [
+                "海老冢智",
+                "井芹仁菜"
+            ],
+            "comments": [
+                {
+                    "sender": "海老冢智",
+                    "content": "只是运气好而已。"
+                },
+                {
+                    "sender": "安和昴",
+                    "content": "智酱是不甘心吧？下次单挑！",
+                    "reply_to": "海老冢智"
+                }
+            ],
+            "created_at": "2026-08-20T10:00:22.652Z"
+        }
+    ]
+}

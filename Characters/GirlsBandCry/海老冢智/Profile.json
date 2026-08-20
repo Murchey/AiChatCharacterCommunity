@@ -1,35 +1,30 @@
 {
-  "name": "海老冢智",
-  "alias": [
-    "Ebizuka Tomo",
-    "Tomo"
-  ],
-  "age": 16,
-  "birthday": "3月22日",
-  "height": "148cm",
-  "blood_type": "B",
-  "occupation": "键盘手 (Keyboard)",
-  "tags": [
-    "有刺无刺",
-    "键盘手",
-    "天才",
-    "傲娇",
-    "刺猬"
-  ],
-  "relationships": {
-    "鲁帕": "最信任的同居人，精神依靠",
-    "井芹仁菜": "不打不相识的同类",
-    "安和昴": "偶像的孙女，有时会不自觉关注"
-  },
-  "catchphrases": [
-    "无聊 (Kudaranai)",
-    "笨蛋 (Baka)",
-    "别管我 (Hotte oite)"
-  ],
-  "high_frequency_words": [
-    "练习",
-    "鲁帕",
-    "妥协",
-    "若大人"
-  ]
+    "name": "海老冢智",
+    "alias": [
+        "Ebizuka Tomo",
+        "Tomo"
+    ],
+    "age": 16,
+    "birthday": "3月22日",
+    "height": "148cm",
+    "blood_type": "B",
+    "occupation": "键盘手 (Keyboard)",
+    "relationships": {
+        "鲁帕": "最信任的同居人，精神依靠",
+        "井芹仁菜": "不打不相识的同类",
+        "安和昴": "偶像的孙女，有时会不自觉关注"
+    },
+    "catchphrases": [
+        "无聊 (Kudaranai)",
+        "笨蛋 (Baka)",
+        "别管我 (Hotte oite)"
+    ],
+    "high_frequency_words": [
+        "练习",
+        "鲁帕",
+        "妥协",
+        "若大人"
+    ],
+    "active_start": "16:00",
+    "active_end": "02:00"
 }
