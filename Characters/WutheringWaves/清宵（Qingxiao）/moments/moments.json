@@ -1,0 +1,16 @@
+{
+    "character_name": "清宵",
+    "moments": [
+        {
+            "id": "m1",
+            "content": "御剑巡过玄方，山河如旧",
+            "images": ["files/01.jpg"],
+            "likes": ["漂泊者", "卜灵", "心", "椋羽"],
+            "comments": [
+                { "sender": "漂泊者", "content": "师尊今日也辛苦。" },
+                { "sender": "卜灵", "content": "煌珑人能飞~" }
+            ],
+            "created_at": "2026-08-21T08:00:00.000"
+        }
+    ]
+}
