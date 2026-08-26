@@ -113,6 +113,54 @@ jobs:
             name_mapping/*.txt
           if-no-files-found: error
 
+  build-stickers:
+    name: 打包（表情包分类）
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create sticker zip packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p release_packages
+          package_count=0
+
+          for sticker_dir in Stickers/*/; do
+            [ -d "$sticker_dir" ] || continue
+
+            sticker_name=$(basename "$sticker_dir")
+            if ! find "$sticker_dir" -type f \( \
+              -iname '*.gif' -o -iname '*.webp' -o -iname '*.png' -o \
+              -iname '*.jpg' -o -iname '*.jpeg' \
+            \) -print -quit | grep -q .; then
+              echo "Skipping $sticker_name: no supported sticker images found."
+              continue
+            fi
+
+            (
+              cd Stickers
+              zip -r "../release_packages/$sticker_name.zip" "$sticker_name" \
+                -i '*.gif' '*.webp' '*.png' '*.jpg' '*.jpeg' \
+                   '*.GIF' '*.WEBP' '*.PNG' '*.JPG' '*.JPEG'
+            )
+            echo "Created sticker pack: $sticker_name.zip"
+            package_count=$((package_count + 1))
+          done
+
+          if [ "$package_count" -eq 0 ]; then
+            echo "No valid sticker packages were found under Stickers/." >&2
+            exit 1
+          fi
+
+      - name: Upload sticker artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sticker-packages
+          path: release_packages/*.zip
+          if-no-files-found: error
+
   release-game:
     name: 发布游戏分类 Release（V1.0.0）
     needs: build-game
@@ -246,6 +294,61 @@ jobs:
         with:
           tag_name: V1.1.0
           name: 角色分类角色包 V1.1.0
+          body_path: release_notes.md
+          files: release_packages/*.zip
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  release-stickers:
+    name: 发布表情包分类 Release（V1.3.0）
+    needs: build-stickers
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download sticker artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: sticker-packages
+          path: release_packages
+
+      - name: Generate release notes
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > release_notes.md << 'EOF'
+          # 表情包
+
+          下载 ZIP 后，在 App 中进入 **【我】→ 创意工坊 → 表情包分类**，勾选并下载导入。
+
+          ## 表情包列表
+          EOF
+          for zip_file in release_packages/*.zip; do
+            [ -f "$zip_file" ] || continue
+            sticker_name=$(basename "$zip_file" .zip)
+            echo "- **${sticker_name}**" >> release_notes.md
+          done
+          cat >> release_notes.md << 'EOF'
+
+          ## 说明
+
+          - 每个 ZIP 是一个独立表情包。
+          - ZIP 内图片文件名（去掉扩展名）会作为导入后的表情包备注。
+          - 支持 GIF、WebP、PNG、JPG 和 JPEG 图片。
+          EOF
+
+      - name: Delete existing release V1.3.0
+        run: |
+          gh release delete "V1.3.0" --yes --cleanup-tag -R "${{ github.repository }}" 2>/dev/null || true
+          gh api "repos/${{ github.repository }}/git/refs/tags/V1.3.0" -X DELETE 2>/dev/null || true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create release V1.3.0
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: V1.3.0
+          name: 表情包 V1.3.0
           body_path: release_notes.md
           files: release_packages/*.zip
           draft: false

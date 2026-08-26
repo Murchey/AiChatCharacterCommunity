@@ -49,6 +49,7 @@ jobs:
           echo "其他 Release：" >> release_notes.md
           echo "- [V1.0.0（游戏分类角色包）](./tag/V1.0.0)" >> release_notes.md
           echo "- [V1.1.0（角色分类角色包）](./tag/V1.1.0)" >> release_notes.md
+          echo "- [V1.3.0（表情包）](./tag/V1.3.0)" >> release_notes.md
 
       - name: Delete existing release V1.2.0
         run: |
