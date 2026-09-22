@@ -2,3 +2,7 @@
 dist/
 push_to_upstream.*
 IDEA.md
+
+# Python 字节码
+*.pyc
+__pycache__/
