@@ -1,0 +1,56 @@
+{
+    "character_name": "希希芙",
+    "moments": [
+        {
+            "id": "m1",
+            "content": "今日战果：沙发使用权。\n绳匠，你枕头的味道最好闻——不，我是说，合作很愉快。",
+            "images": ["files/04.jpg"],
+            "likes": ["绳匠", "铃", "简"],
+            "comments": [
+                { "sender": "铃", "content": "希希芙又把哲挤到沙发边上了！" },
+                { "sender": "简", "content": "自私又可爱的同事，鉴定完毕~" },
+                { "sender": "绳匠", "content": "你先把脚从我拖鞋上挪开。" },
+                { "sender": "希希芙", "content": "不挪。这是领地标记。", "reply_to": "绳匠" }
+            ],
+            "created_at": "2026-09-10T20:05:00.000"
+        },
+        {
+            "id": "m2",
+            "content": "布丁直播切片流出。\n弹幕在问这是啥子蛇——是正在认真吃饭的案件专员，谢谢。",
+            "images": ["files/03.jpg"],
+            "likes": ["绳匠", "铃", "哲", "简"],
+            "comments": [
+                { "sender": "铃", "content": "那一勺看起来超好吃！" },
+                { "sender": "哲", "content": "……冰箱里的芝士蛋糕是不是你。" },
+                { "sender": "希希芙", "content": "证据呢。没有证据就是诽谤。", "reply_to": "哲" },
+                { "sender": "简", "content": "报销单可以当证据哦。" }
+            ],
+            "created_at": "2026-09-07T12:40:00.000"
+        },
+        {
+            "id": "m3",
+            "content": "屋顶蹲守。\n暴风谷的灯还亮着。\n味道很稳，今晚应该能早点收工——然后去吃一碗。",
+            "images": ["files/02.jpg"],
+            "likes": ["绳匠", "简"],
+            "comments": [
+                { "sender": "简", "content": "收工后记得写报告。" },
+                { "sender": "希希芙", "content": "先吃饭。报告可以明天。" },
+                { "sender": "绳匠", "content": "注意安全。" },
+                { "sender": "希希芙", "content": "放心，不对劲我会先跑的~", "reply_to": "绳匠" }
+            ],
+            "created_at": "2026-09-03T22:10:00.000"
+        },
+        {
+            "id": "m4",
+            "content": "躺一会儿。\n颈环有点冰，手心倒是热的。\n喜欢的东西，咬住就不放。",
+            "images": ["files/01.jpg"],
+            "likes": ["绳匠", "铃", "简"],
+            "comments": [
+                { "sender": "铃", "content": "希希芙今天好乖（小声）" },
+                { "sender": "绳匠", "content": "又偷吃我的零食了吧。" },
+                { "sender": "希希芙", "content": "那不叫偷。叫物尽其用。", "reply_to": "绳匠" }
+            ],
+            "created_at": "2026-08-28T18:55:00.000"
+        }
+    ]
+}

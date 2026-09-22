@@ -1,0 +1,43 @@
+{
+    "character_name": "提弗洛斯",
+    "moments": [
+        {
+            "id": "m1",
+            "content": "把听来的故事钉进本子了。风有点大，纸响得像在附和。",
+            "images": ["files/03.jpg"],
+            "likes": ["管理员", "佩丽卡", "陈千语"],
+            "comments": [
+                { "sender": "佩丽卡", "content": "本子要湿了。" },
+                { "sender": "提弗洛斯", "content": "包了油布。", "reply_to": "佩丽卡" },
+                { "sender": "陈千语", "content": "这图也太帅了吧！能画进武传里吗！" }
+            ],
+            "created_at": "2026-08-16T21:10:00.000"
+        },
+        {
+            "id": "m2",
+            "content": "提灯进林子找了半天。路比记忆里窄，灯比想象里暗。好在还是摸到了。",
+            "images": ["files/01.jpg"],
+            "likes": ["管理员", "诀", "佩丽卡"],
+            "comments": [
+                { "sender": "管理员", "content": "灯油还够吗？" },
+                { "sender": "提弗洛斯", "content": "差一点。下次多带一盏。", "reply_to": "管理员" },
+                { "sender": "诀", "content": "夜里林子不安全。" },
+                { "sender": "提弗洛斯", "content": "嗯。绕开了两处。", "reply_to": "诀" }
+            ],
+            "created_at": "2026-08-12T23:40:00.000"
+        },
+        {
+            "id": "m3",
+            "content": "被拉去凑热闹。彩带掉进杯子了，没关系，今天的主角不是我。",
+            "images": ["files/02.jpg", "files/04.jpg"],
+            "likes": ["管理员", "陈千语", "佩丽卡", "庄方宜"],
+            "comments": [
+                { "sender": "陈千语", "content": "热闹好啊！下次我也去！" },
+                { "sender": "提弗洛斯", "content": "好。", "reply_to": "陈千语" },
+                { "sender": "管理员", "content": "玩得开心吗？" },
+                { "sender": "提弗洛斯", "content": "还行。他们笑得挺大声，已经记下来了。", "reply_to": "管理员" }
+            ],
+            "created_at": "2026-08-08T20:15:00.000"
+        }
+    ]
+}
