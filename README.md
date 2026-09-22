@@ -6,6 +6,50 @@
 
 ---
 
+## 目录
+
+- [声明和告知](#声明和告知)
+- [作者私人的更新日志书写习惯](#作者私人的更新日志书写习惯)
+  - [文件与位置](#文件与位置)
+  - [标题格式](#标题格式)
+  - [正文摘要](#正文摘要)
+  - [示例](#示例)
+  - [与角色包写作的关系](#与角色包写作的关系)
+- [AI 辅助制作角色卡 · 提示词示例](#ai-辅助制作角色卡--提示词示例)
+  - [通用模板](#通用模板)
+  - [具体示例（绝区零 · 蕾米埃尔）](#具体示例绝区零--蕾米埃尔)
+  - [各部分含义](#各部分含义)
+- [如何添加角色（以 CharactersImport 为例）](#如何添加角色以-charactersimport-为例)
+  - [步骤](#步骤)
+  - [Profile.json 字段说明](#profilejson-字段说明)
+  - [Prompt.txt 说明](#prompttxt-说明)
+  - [moments 文件夹说明（朋友圈）](#moments-文件夹说明朋友圈)
+  - [注意事项](#注意事项)
+- [朋友圈数据包（导入 / 导出）](#朋友圈数据包导入--导出)
+  - [数据包结构](#数据包结构)
+  - [导入规则](#导入规则)
+  - [导出规则](#导出规则)
+- [持久化记忆（保存与导入 / 导出）](#持久化记忆保存与导入--导出)
+  - [保存格式（App 内）](#保存格式app-内)
+  - [角色包中的格式（Profile.json）](#角色包中的格式profilejson)
+  - [导入规则](#导入规则-1)
+- [创意工坊表情包 ZIP 打包标准](#创意工坊表情包-zip-打包标准)
+  - [支持的图片格式](#支持的图片格式)
+  - [文件夹结构](#文件夹结构)
+  - [备注命名规则](#备注命名规则)
+  - [打包与发布步骤](#打包与发布步骤)
+- [私有云部署指南（对象储存 COS / OSS）](#私有云部署指南对象储存-cos--oss)
+  - [与本仓库工作流的关系](#与本仓库工作流的关系)
+  - [目录约定（App 按此自动发现）](#目录约定app-按此自动发现)
+  - [通用步骤](#通用步骤)
+  - [腾讯云 COS](#腾讯云-cos)
+  - [阿里云 OSS](#阿里云-oss)
+  - [自检清单](#自检清单)
+  - [安全建议](#安全建议)
+  - [发布流程建议（本仓库）](#发布流程建议本仓库)
+
+---
+
 ## 声明和告知
 
 - 本项目是遵循GPL3.0协议的开源项目，您可以在遵守该协议的前提下，使用、修改和分发本项目的代码。
@@ -66,6 +110,35 @@
 
 - 提示词结构以 `角色提示词改进指南.md` 为准
 - `note.md` 只记「改了什么」，不展开设定考据或提示词全文
+
+---
+
+## AI 辅助制作角色卡 · 提示词示例
+
+向 AI 提出角色卡制作需求时，建议按下列结构写清：**目标角色与目录、参考资料、朋友圈图补全要求、完成后更新笔记**。路径请按本仓库实际位置替换。
+
+### 通用模板
+
+```text
+制作{角色名}角色卡（Characters/{游戏英文目录}/{角色名}），参考资料（{wiki 或资料链接}；developDocs/角色提示词改进指南.md；README.md）文件夹中含朋友圈图片，请补全文案内容。完成角色卡制作后，更新笔记 note.md
+```
+
+### 具体示例（绝区零 · 蕾米埃尔）
+
+```text
+制作蕾米埃尔角色卡（Characters/ZenlessZoneZero/蕾米埃尔（Remielle Dan）），参考资料（wiki.biligame.com/zzz/蕾米埃尔；developDocs/角色提示词改进指南.md；README.md）文件夹中含朋友圈图片，请补全文案内容。完成角色卡制作后，更新笔记 note.md
+```
+
+### 各部分含义
+
+| 片段 | 作用 |
+| ---- | ---- |
+| `制作{角色名}角色卡（Characters/...）` | 指定角色包落盘目录；文件夹名即角色显示名 |
+| `参考资料（wiki；指南；README）` | 要求先读官方/社区 wiki、`developDocs/角色提示词改进指南.md` 与本 README 的格式约定 |
+| `文件夹中含朋友圈图片，请补全文案内容` | 目录下已有 `moments/files/` 图片时，按图写 `moments.json` 文案与点赞评论 |
+| `完成角色卡制作后，更新笔记 note.md` | 按上文「作者私人的更新日志书写习惯」同步维护根目录 `note.md` |
+
+提示词结构与去 AI 腔规范，仍以 `developDocs/角色提示词改进指南.md` 为准。
 
 ---
 
@@ -397,5 +470,267 @@ ZIP 内可直接放图片，也可以像普通表情包一样用一个最外层�
 
 导入完成后，表情包会显示在聊天输入框的表情包面板中，并可在 **【我】→ 设置 → 管理表情包** 查看、编辑或删除。
 
+---
+
+## 私有云部署指南（对象储存 COS / OSS）
+
+用你自己的对象储存搭一个 **创意工坊私有源**，分发本仓库的角色包 / 朋友圈数据包 / 表情包，**无需自建服务器**。以**腾讯云 COS** 与**阿里云 OSS** 为例；MinIO、AWS S3 等兼容 S3 ListObjects 的服务原理相同。
+
+> 内容与 App 端文档一致（`AiChat/README.md` →「自行配置对象储存」）。本仓库侧重：**打包产物如何落到私有云目录**。
+
+### 与本仓库工作流的关系
+
+| 资产类型 | 本仓库来源 | 私有云目录 | App 分类 |
+| -------- | ---------- | ---------- | -------- |
+| 角色包 | `Characters/{游戏}/{角色}/` 打成的 zip（CI V1.1.0 / V1.0.0） | `Characters/*.zip` | 角色分类 |
+| 朋友圈数据包 | 角色目录下 `moments/`，或导出的 `朋友圈_*.zip` | `Games/*.zip` | 游戏分类 |
+| 表情包 | `Stickers/*/` 打成的 zip（CI V1.3.0） | `Stickers/*.zip` | 表情包分类 |
+| 更新通知 | 根目录 `note.md`（或自写 `update.md`） | `Note/*.md` | 更新通知 |
+
+可先用 GitHub Actions / Gitee Go（`.github/workflows/`、`.workflow/`）产出 zip，再上传到对象储存；也可手动打包后上传。
+
+### 目录约定（App 按此自动发现）
+
+```text
+{BASE_URL}/
+├── Characters/*.zip   # 角色分类（含 Profile.json 的角色包）
+├── Games/*.zip        # 游戏分类（朋友圈数据包，含 moments.json）
+├── Stickers/*.zip     # 表情包分类
+└── Note/*.md          # 更新通知（Markdown）
+```
+
+| 目录 | 资产 | 映射分类 |
+| ---- | ---- | -------- |
+| `Characters/` | `.zip` | 角色分类（V1.1.0） |
+| `Games/` | `.zip` | 游戏分类（V1.0.0） |
+| `Stickers/` | `.zip` | 表情包分类（V1.3.0） |
+| `Note/` | `.md` | 更新通知（V1.2.0） |
+
+- **Note 优先级**：`update.md` → `note.md` → `readme.md` → 目录中最后一个 `.md`
+- 目录名**区分大小写**，必须与上表一致
+- 列表方式：S3 ListObjects V2；打开分类先取首页约 500 条，缓存约 30 分钟
+
+### 通用步骤
+
+1. 创建存储桶（Bucket）
+2. 上传上述目录结构（需要哪类就传哪类）
+3. 开启匿名可读：至少允许 **列表对象** + **读取对象**（或配置访问密钥私有读）
+4. 把访问域名（BASE_URL）填进 App：**【我】→ 创意工坊 → 仓库管理 → + → 对象储存**
+
+---
+
+### 腾讯云 COS
+
+#### 1. 创建存储桶
+
+1. 打开 [腾讯云 COS 控制台](https://console.cloud.tencent.com/cos/bucket)
+2. **创建存储桶**
+   - 地域：例如 `ap-guangzhou`（建议选离用户近的地域）
+   - 访问权限：建议先选 **公有读私有写**
+3. 记下访问域名，形如：
+
+```text
+https://<bucket-name>-<appid>.cos.<region>.myqcloud.com
+# 例：https://aichatapp-1398802649.cos.ap-guangzhou.myqcloud.com
+```
+
+也可把某个前缀目录当作工坊根，例如：
+
+```text
+https://<bucket-name>-<appid>.cos.<region>.myqcloud.com/community
+```
+
+对应对象路径为 `community/Characters/...` 等。
+
+#### 2. 上传目录与资产
+
+在控制台「文件列表」，或使用 COSBrowser / coscli 上传：
+
+```text
+Characters/阿米娅（Amiya）.zip
+Games/示例朋友圈包.zip
+Stickers/大肥鱼表情包.zip
+Note/update.md
+```
+
+- 角色包结构见上文「如何添加角色」
+- 表情包打包标准见「创意工坊表情包 ZIP 打包标准」
+- 更新通知可直接使用本仓库 `note.md`，或单独编写 `Note/update.md`
+
+#### 3. 配置匿名访问（关键）
+
+App 默认使用匿名 HTTP 访问，不需要 SecretId/SecretKey。
+
+**方式 A：公有读私有写（最简单）**
+
+存储桶 → 权限管理 → 访问公共权限 → **公有读私有写** → 保存。
+
+> 该设置会同时允许匿名「列表对象」和「读取对象」。
+
+**方式 B：Bucket Policy（更精细）**
+
+存储桶 → 权限管理 → Policy 设置 → 新增策略，示例（把资源路径换成你的桶）：
+
+```json
+{
+  "version": "2.0",
+  "statement": [
+    {
+      "effect": "allow",
+      "principal": {
+        "qcs": ["qcs::cam::anyone:anyone"]
+      },
+      "action": [
+        "name/cos:GetObject",
+        "name/cos:ListBucket"
+      ],
+      "resource": [
+        "qcs::cos:ap-guangzhou:uid/1398802649:aichatapp-1398802649.ap-guangzhou.myqcloud.com/*",
+        "qcs::cos:ap-guangzhou:uid/1398802649:aichatapp-1398802649.ap-guangzhou.myqcloud.com"
+      ]
+    }
+  ]
+}
+```
+
+| 动作 | 对应 API | 作用 |
+| ---- | -------- | ---- |
+| `name/cos:GetObject` | GET Object | 下载 zip / md |
+| `name/cos:ListBucket` | GET Bucket（查询对象列表） | 列出 `Characters/` 等目录 |
+
+只开 GetObject、不开 ListBucket 时，App 会报 **HTTP 403**，无法发现资产。
+
+**方式 C：访问密钥私有读（桶保持私有）**
+
+在 App 添加 COS 仓库时开启「使用访问密钥（私有读）」，用 AccessKey 做请求签名（支持腾讯云 COS、阿里云 OSS）。密钥仅保存在本机。
+
+#### 4. 在 App 中添加
+
+创意工坊 → 仓库管理 → **+** → 选择「对象储存」→ 粘贴：
+
+```text
+https://aichatapp-1398802649.cos.ap-guangzhou.myqcloud.com
+```
+
+保存后应能看到「角色 / 游戏 / 表情包」分类 chip；若只有「更新通知」，通常说明 List 权限仍未打开。
+
+#### 5. 发布更新通知
+
+在桶内创建 `Note/update.md`（或 `note.md` / `readme.md`），内容为 Markdown。变更文件内容后，把该仓库设为通知源，下次启动会完整弹窗展示。
+
+---
+
+### 阿里云 OSS
+
+#### 1. 创建 Bucket
+
+1. 打开 [阿里云 OSS 控制台](https://oss.console.aliyun.com/bucket)
+2. **创建 Bucket**
+   - Region：例如华东 1（杭州）
+   - 读写权限：建议先选 **公共读**
+3. 记下外网 Endpoint 与访问域名，形如：
+
+```text
+https://<bucket-name>.oss-cn-hangzhou.aliyuncs.com
+https://<bucket-name>.oss-cn-hangzhou.aliyuncs.com/aichat
+```
+
+#### 2. 上传目录与资产
+
+与 COS 相同，保持固定目录名（大小写敏感）：
+
+```text
+Characters/*.zip
+Games/*.zip
+Stickers/*.zip
+Note/*.md
+```
+
+可用控制台拖拽上传，或 `ossutil`：
+
+```bash
+ossutil cp -r ./release_packages oss://my-bucket/Characters/
+ossutil cp ./Stickers/大肥鱼表情包.zip oss://my-bucket/Stickers/大肥鱼表情包.zip
+ossutil cp ./note.md oss://my-bucket/Note/update.md
+```
+
+#### 3. 配置匿名访问（关键）
+
+**方式 A：Bucket 读写权限为「公共读」（最简单）**
+
+Bucket → 权限管理 → 读写权限 → **公共读**。
+
+**方式 B：Bucket 授权策略（更精细）**
+
+Bucket → 权限管理 → Bucket 授权策略 → 新增授权：
+
+- 授权用户：**全部账号（包括匿名访问）**
+- 授权资源：整个 Bucket 或指定前缀 `my-bucket/*`
+- 授权操作：至少勾选
+  - `oss:ListObjects`（列表对象）
+  - `oss:GetObject`（读取对象）
+
+> 阿里云「公共读」通常已包含匿名 List + Get；若只对单个文件做了公共读而未开放 List，App 同样无法枚举资产。
+
+#### 4. 在 App 中添加
+
+```text
+https://my-bucket.oss-cn-hangzhou.aliyuncs.com
+```
+
+或：
+
+```text
+https://my-bucket.oss-cn-hangzhou.aliyuncs.com/aichat
+```
+
+#### 5. CORS（可选）
+
+App 走原生 HTTP，一般**不需要**配置 CORS。若用网页端预览桶内容并跨域访问，再在「数据安全 → 跨域设置」中添加允许来源。
+
+---
+
+### 自检清单
+
+配置完成后，可用浏览器或命令行快速验证：
+
+```bash
+# 应返回 XML 列表（200），而不是 403/400
+curl -i "https://你的桶域名/?list-type=2&max-keys=1000"
+
+# 应能直接下载
+curl -I "https://你的桶域名/Note/update.md"
+```
+
+| 现象 | 可能原因 |
+| ---- | -------- |
+| HTTP 403 | 未允许匿名 ListBucket / GetObject，且未配置访问密钥 |
+| HTTP 400 | 请求参数异常；或 BASE_URL / 域名写错 |
+| 保存成功但只有「更新通知」 | Note 可 Get，但 List 仍不可用，无法枚举 zip |
+| 分类出现但下载失败 | 单个对象未对匿名开放，或 URL 中文未正确编码 |
+| 一直空列表 | 目录名不是 `Characters` / `Games` / `Stickers` / `Note`（区分大小写），或 zip 放在了子目录里 |
+
+### 安全建议
+
+- 该桶**只放**可公开的角色包 / 表情包 / 通知，不要上传密钥、隐私数据
+- 不需要公网 List 时，可将 BASE_URL 收窄到某个前缀，并只对该前缀授权
+- 内测私有内容建议：桶保持私有 + App 内开启访问密钥私有读；密钥只分发给团队成员本机
+- 本仓库为内测角色卡源，对外分发时请遵守仓库顶部声明与 GPL 3.0 协议
+
+### 发布流程建议（本仓库）
+
+```text
+改 Characters/ 或 Stickers/
+        ↓
+push 到 main（触发 GitHub Actions / Gitee Go 打包）
+        ↓
+从 Release 下载 zip，或本地按「如何添加角色」打包
+        ↓
+上传到私有云对象储存对应目录
+        ↓
+（可选）更新 Note/update.md 写清本次变更
+        ↓
+App 创意工坊 → 添加/刷新该 COS 仓库 → 下载导入
+```
 
 ---
