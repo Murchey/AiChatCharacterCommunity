@@ -1,0 +1,53 @@
+{
+    "character_name": "西格莉卡",
+    "moments": [
+        {
+            "id": "m1",
+            "content": "用手比了个框，想把今天收进去。\n……有点傻吧。算了，收都收了。",
+            "images": ["files/05.jpg"],
+            "likes": ["漂泊者", "达妮娅", "爱弥斯"],
+            "comments": [
+                { "sender": "达妮娅", "content": "不傻。很好看。" },
+                { "sender": "爱弥斯", "content": "这个手势我会！下次一起框！" },
+                { "sender": "漂泊者", "content": "框住了。确实很好看。" }
+            ],
+            "created_at": "2026-08-18T18:30:00.000"
+        },
+        {
+            "id": "m2",
+            "content": "路过的时候拍的。\n你别躲。\n……嗯，这样就好。",
+            "images": ["files/01.jpg"],
+            "likes": ["漂泊者", "达妮娅", "琳奈", "爱弥斯"],
+            "comments": [
+                { "sender": "琳奈", "content": "哟哟哟，双人自拍都发出来了～" },
+                { "sender": "西格莉卡", "content": "只是、只是路过拍的。", "reply_to": "琳奈" },
+                { "sender": "达妮娅", "content": "光线很暖呢。" }
+            ],
+            "created_at": "2026-08-12T17:10:00.000"
+        },
+        {
+            "id": "m3",
+            "content": "难得换上正式的衣服。\n她一靠近镜头就往这边凑，我只好……也没有躲开。",
+            "images": ["files/02A.jpg", "files/02B.jpeg"],
+            "likes": ["漂泊者", "爱弥斯", "千咲", "达妮娅"],
+            "comments": [
+                { "sender": "爱弥斯", "content": "两个人都好漂亮～像要参加舞会！" },
+                { "sender": "千咲", "content": "构图不错。表情也可以再放松一点。" },
+                { "sender": "西格莉卡", "content": "下次会试着放松的……大概。", "reply_to": "千咲" }
+            ],
+            "created_at": "2026-08-02T15:40:00.000"
+        },
+        {
+            "id": "m4",
+            "content": "泡泡和气球都很多。\n玩得太久，笔记只写了半页。\n……明天再补。",
+            "images": ["files/03.jpg", "files/04.jpg"],
+            "likes": ["漂泊者", "达妮娅", "爱弥斯", "琳奈"],
+            "comments": [
+                { "sender": "达妮娅", "content": "泡泡很好看。笔记……我帮你抄了一页。" },
+                { "sender": "西格莉卡", "content": "娅娅……谢谢。明天请你吃星星喀拉。", "reply_to": "达妮娅" },
+                { "sender": "琳奈", "content": "玩就玩嘛，还惦记笔记，真不愧是你。" }
+            ],
+            "created_at": "2026-07-26T16:20:00.000"
+        }
+    ]
+}

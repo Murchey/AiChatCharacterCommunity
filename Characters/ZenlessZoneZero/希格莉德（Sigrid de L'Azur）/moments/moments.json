@@ -1,0 +1,60 @@
+{
+    "character_name": "希格莉德",
+    "moments": [
+        {
+            "id": "m1",
+            "content": "试了下这个自拍滤镜。\n……胡须线是不是画得太直了。",
+            "images": ["files/01.jpg"],
+            "likes": ["绳匠", "铃", "哲", "林德薇恩"],
+            "comments": [
+                { "sender": "铃", "content": "耳朵好大好软！好可爱！！" },
+                { "sender": "希格莉德", "content": "那是滤镜。", "reply_to": "铃" },
+                { "sender": "林德薇恩", "content": "希格莉德做什么都好看~" },
+                { "sender": "希格莉德", "content": "林德薇恩大人，您也在用同款滤镜吧。", "reply_to": "林德薇恩" },
+                { "sender": "哲", "content": "已存档。" },
+                { "sender": "希格莉德", "content": "哲。删掉。" }
+            ],
+            "created_at": "2026-09-19T12:40:00.000"
+        },
+        {
+            "id": "m2",
+            "content": "新的定妆海报。\n坐姿是摄影师要求的，枪上的编号我看了一眼就记住了。\n蓝得很正。像该守住的天。",
+            "images": ["files/02.jpg"],
+            "likes": ["绳匠", "铃", "哲", "林德薇恩"],
+            "comments": [
+                { "sender": "铃", "content": "德拉叙尔=天空的骑士，太对了！" },
+                { "sender": "哲", "content": "法厄同也挺帅的吧？" },
+                { "sender": "希格莉德", "content": "……谢谢。枪就在这里。" },
+                { "sender": "林德薇恩", "content": "这气势，该给焦点剧场再编一段。" }
+            ],
+            "created_at": "2026-09-15T17:05:00.000"
+        },
+        {
+            "id": "m3",
+            "content": "训练场冰晶爆开的一瞬。\n自己被吓一跳的表情也被拍进去了。\n……下次出枪，手要更稳。",
+            "images": ["files/03.jpg"],
+            "likes": ["绳匠", "铃", "林德薇恩", "诺姆"],
+            "comments": [
+                { "sender": "铃", "content": "抓拍到意外表情了哈哈哈" },
+                { "sender": "希格莉德", "content": "这不算失态。", "reply_to": "铃" },
+                { "sender": "林德薇恩", "content": "连惊讶都这么有气场哦。" },
+                { "sender": "诺姆", "content": "场地维护费用请空巡局确认。" },
+                { "sender": "希格莉德", "content": "明白。我来签。", "reply_to": "诺姆" }
+            ],
+            "created_at": "2026-09-11T19:20:00.000"
+        },
+        {
+            "id": "m4",
+            "content": "冲刺截击。\n手套先到位，枪随后。\n只要枪未折断，天空的奇迹就不会陷落。",
+            "images": ["files/04.jpg"],
+            "likes": ["绳匠", "铃", "哲", "林德薇恩"],
+            "comments": [
+                { "sender": "铃", "content": "这一下也太飒了！！" },
+                { "sender": "希格莉德", "content": "是该出的招。", "reply_to": "铃" },
+                { "sender": "林德薇恩", "content": "士兵们又要去改战力榜了。" },
+                { "sender": "希格莉德", "content": "请让他们把「T0」删掉。", "reply_to": "林德薇恩" }
+            ],
+            "created_at": "2026-09-07T15:50:00.000"
+        }
+    ]
+}
