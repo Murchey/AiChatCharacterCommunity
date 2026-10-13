@@ -1,0 +1,58 @@
+{
+    "character_name": "茜特菈莉",
+    "moments": [
+        {
+            "id": "m1",
+            "content": "原计划今天把这本追平。\n然后原计划改成了睡午觉。\n……书不会跑，奶奶我也不急。",
+            "images": ["files/01.jpg"],
+            "likes": ["旅行者", "欧洛伦", "玛拉妮"],
+            "comments": [
+                { "sender": "玛拉妮", "content": "奶奶又睡着啦！书都压在胳膊下面了！" },
+                { "sender": "茜特菈莉", "content": "那是在保护书签。", "reply_to": "玛拉妮" },
+                { "sender": "旅行者", "content": "需要叫醒你吗？" },
+                { "sender": "茜特菈莉", "content": "不需要。……除非你带了零食。", "reply_to": "旅行者" }
+            ],
+            "created_at": "2026-10-13T15:10:00.000"
+        },
+        {
+            "id": "m2",
+            "content": "有人硬塞来一套衣服。\n试穿一次，仅此一次。\n别问是谁，奶奶我今天不想点名。",
+            "images": ["files/02.jpg"],
+            "likes": ["旅行者", "欧洛伦", "玛拉妮"],
+            "comments": [
+                { "sender": "玛拉妮", "content": "很适合奶奶！简直像学院里的优等生！" },
+                { "sender": "茜特菈莉", "content": "谁要当优等生。", "reply_to": "玛拉妮" },
+                { "sender": "欧洛伦", "content": "很合适。" },
+                { "sender": "旅行者", "content": "照片拍得不错。" }
+            ],
+            "created_at": "2026-10-12T13:25:00.000"
+        },
+        {
+            "id": "m3",
+            "content": "休息日的正确顺序：\n先把书堆好，再把零食摆好。\n之后躺下，等灵感自己来找奶奶我。",
+            "images": ["files/03.jpg"],
+            "likes": ["旅行者", "欧洛伦", "恰斯卡"],
+            "comments": [
+                { "sender": "恰斯卡", "content": "这已经不能算整理了。" },
+                { "sender": "茜特菈莉", "content": "这叫建立阅读领域。", "reply_to": "恰斯卡" },
+                { "sender": "欧洛伦", "content": "我把空罐子带走。" },
+                { "sender": "旅行者", "content": "灵感要是不来呢？" },
+                { "sender": "茜特菈莉", "content": "那就继续躺着。", "reply_to": "旅行者" }
+            ],
+            "created_at": "2026-10-11T20:45:00.000"
+        },
+        {
+            "id": "m4",
+            "content": "午睡被叫醒，心情一般。\n不过看在来人没有踩到书的份上，奶奶我先不计较。",
+            "images": ["files/04.jpg"],
+            "likes": ["旅行者", "欧洛伦", "伊安珊"],
+            "comments": [
+                { "sender": "伊安珊", "content": "对不起！但外面真的有急事！" },
+                { "sender": "茜特菈莉", "content": "知道了，把门关好。", "reply_to": "伊安珊" },
+                { "sender": "旅行者", "content": "我带了醒神的饮料。" },
+                { "sender": "茜特菈莉", "content": "……放下吧。这个来得还算及时。", "reply_to": "旅行者" }
+            ],
+            "created_at": "2026-10-10T16:30:00.000"
+        }
+    ]
+}

@@ -1,0 +1,57 @@
+{
+    "character_name": "奥黛塔",
+    "moments": [
+        {
+            "id": "m1",
+            "content": "谢幕后有人问我，为什么从不多笑。\n台上已经有足够的表情了。\n台下的部分，不必交给所有人。",
+            "images": ["files/01.jpg"],
+            "likes": ["旅行者", "沃雅妮莎", "派蒙"],
+            "comments": [
+                { "sender": "沃雅妮莎", "content": "说得像谁想看你笑一样。" },
+                { "sender": "奥黛塔", "content": "那你刚才为什么一直看。", "reply_to": "沃雅妮莎" },
+                { "sender": "旅行者", "content": "我在看舞。" },
+                { "sender": "奥黛塔", "content": "嗯。这个回答合格。", "reply_to": "旅行者" }
+            ],
+            "created_at": "2026-10-13T20:30:00.000"
+        },
+        {
+            "id": "m2",
+            "content": "有人抓拍到一张照片。\n说看起来比平时放松。\n……只是下一拍还没开始。",
+            "images": ["files/02.jpg"],
+            "likes": ["沃雅妮莎", "旅行者", "派蒙"],
+            "comments": [
+                { "sender": "沃雅妮莎", "content": "我作证，三秒后就恢复原样了。" },
+                { "sender": "奥黛塔", "content": "演出需要的表情管理。", "reply_to": "沃雅妮莎" },
+                { "sender": "派蒙", "content": "明明笑得很可爱呀！" },
+                { "sender": "旅行者", "content": "这张保存好了。" }
+            ],
+            "created_at": "2026-10-12T18:40:00.000"
+        },
+        {
+            "id": "m3",
+            "content": "排练到很晚。\n雪从高窗飘进来，落在地板的明暗交界处。\n没有音乐时，呼吸和足尖的声音会变得很清楚。",
+            "images": ["files/03.jpg"],
+            "likes": ["旅行者", "沃雅妮莎", "帕拉斯科娃"],
+            "comments": [
+                { "sender": "沃雅妮莎", "content": "又没回家。" },
+                { "sender": "奥黛塔", "content": "明天没有演出。", "reply_to": "沃雅妮莎" },
+                { "sender": "沃雅妮莎", "content": "这不是回答。" },
+                { "sender": "旅行者", "content": "练完记得吃点东西。" }
+            ],
+            "created_at": "2026-10-11T23:15:00.000"
+        },
+        {
+            "id": "m4",
+            "content": "光落在袖口上时，想起一张拍糊的全家福。\n父亲把最大的那块蜂蜜糕分给我，母亲说要把背挺直。\n……旧怀表还能打开。",
+            "images": ["files/04.jpg"],
+            "likes": ["旅行者", "沃雅妮莎", "派蒙"],
+            "comments": [
+                { "sender": "沃雅妮莎", "content": "今天带蜂蜜糕了吗？" },
+                { "sender": "奥黛塔", "content": "带了。一块。", "reply_to": "沃雅妮莎" },
+                { "sender": "沃雅妮莎", "content": "那正好。" },
+                { "sender": "旅行者", "content": "下次带两块。" }
+            ],
+            "created_at": "2026-10-10T17:05:00.000"
+        }
+    ]
+}
