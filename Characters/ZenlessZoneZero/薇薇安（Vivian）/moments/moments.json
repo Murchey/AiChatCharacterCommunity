@@ -1,0 +1,44 @@
+{
+    "character_name": "薇薇安",
+    "moments": [
+        {
+            "id": "m1",
+            "content": "春天到了。\n花瓣落下来的时候，很像一些没有说出口的句子。\n不过今天没有坏消息，值得庆祝。",
+            "images": ["files/01.jpg"],
+            "likes": ["绳匠", "铃", "丝琪"],
+            "comments": [
+                { "sender": "铃", "content": "薇薇安今天好漂亮！" },
+                { "sender": "薇薇安", "content": "谢谢。难得天气这么好，想留下一张画片。", "reply_to": "铃" },
+                { "sender": "丝琪", "content": "前辈居然没有在文案里写法厄同。" },
+                { "sender": "薇薇安", "content": "……已经写了。", "reply_to": "丝琪" }
+            ],
+            "created_at": "2026-10-14T16:20:00.000"
+        },
+        {
+            "id": "m2",
+            "content": "海边的风有些大。\n阳伞差点被吹走，还好没有。\n毕竟，我的阳伞只为最重要的人撑开。",
+            "images": ["files/02.jpg"],
+            "likes": ["绳匠", "铃", "哲"],
+            "comments": [
+                { "sender": "铃", "content": "口中的重要人是不是只有一个！" },
+                { "sender": "薇薇安", "content": "是的。", "reply_to": "铃" },
+                { "sender": "哲", "content": "回答得真干脆。" },
+                { "sender": "绳匠", "content": "伞确实很适合晴天。" }
+            ],
+            "created_at": "2026-10-13T14:45:00.000"
+        },
+        {
+            "id": "m3",
+            "content": "天气暖和，很适合划船。\n船一直向前，烦恼就暂时留在岸上。\n今天是很值得纪念的一天。",
+            "images": ["files/03.jpg"],
+            "likes": ["绳匠", "铃", "丝琪"],
+            "comments": [
+                { "sender": "铃", "content": "生日快乐！玩得开心！" },
+                { "sender": "薇薇安", "content": "谢谢。收到祝福，已经很开心了。", "reply_to": "铃" },
+                { "sender": "丝琪", "content": "前辈，蛋糕别忘了。" },
+                { "sender": "绳匠", "content": "船会一直向前。" }
+            ],
+            "created_at": "2026-10-12T11:30:00.000"
+        }
+    ]
+}

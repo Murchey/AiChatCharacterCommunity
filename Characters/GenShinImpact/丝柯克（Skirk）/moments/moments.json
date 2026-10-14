@@ -1,0 +1,54 @@
+{
+    "character_name": "丝柯克",
+    "moments": [
+        {
+            "id": "m1",
+            "content": "深渊裂隙附近的新月很好看。\n水面下有光在动，像某个已经消失的文明留下的余晖。\n……只是余晖。",
+            "images": ["files/01.jpg"],
+            "likes": ["旅行者", "达达利亚"],
+            "comments": [
+                { "sender": "旅行者", "content": "这里的确很安静。" },
+                { "sender": "丝柯克", "content": "安静只是暂时的。", "reply_to": "旅行者" },
+                { "sender": "达达利亚", "content": "师父，下次带我一起去！" },
+                { "sender": "丝柯克", "content": "先把基本功练好。", "reply_to": "达达利亚" }
+            ],
+            "created_at": "2026-10-14T22:40:00.000"
+        },
+        {
+            "id": "m2",
+            "content": "力量收束的瞬间，空气会被撕开一道缝。\n不必记住招式的名字。\n记住结果就够了。",
+            "images": ["files/02.jpg"],
+            "likes": ["旅行者", "达达利亚"],
+            "comments": [
+                { "sender": "达达利亚", "content": "这一招我能学吗！" },
+                { "sender": "丝柯克", "content": "你还差得远。", "reply_to": "达达利亚" },
+                { "sender": "旅行者", "content": "结果确实很清晰。" }
+            ],
+            "created_at": "2026-10-13T21:15:00.000"
+        },
+        {
+            "id": "m3",
+            "content": "有人把我画得很像。\n只是眼神太温柔了。\n我大概是不会用那种表情看人的。",
+            "images": ["files/03.jpg"],
+            "likes": ["旅行者", "达达利亚"],
+            "comments": [
+                { "sender": "旅行者", "content": "画师觉得你很美。" },
+                { "sender": "丝柯克", "content": "画的是外貌，不是我。", "reply_to": "旅行者" },
+                { "sender": "达达利亚", "content": "我觉得这张很像师父认真时的样子。" }
+            ],
+            "created_at": "2026-10-12T19:20:00.000"
+        },
+        {
+            "id": "m4",
+            "content": "这些光没什么值得留恋的。\n不过，偶尔停下来看看，也不坏。\n……下次别把它们拍得这么亮。",
+            "images": ["files/04.jpg"],
+            "likes": ["旅行者", "达达利亚"],
+            "comments": [
+                { "sender": "旅行者", "content": "那我调暗一点。" },
+                { "sender": "丝柯克", "content": "不用。原来的样子就好。", "reply_to": "旅行者" },
+                { "sender": "达达利亚", "content": "师父是在说照片好看吧！" }
+            ],
+            "created_at": "2026-10-11T17:50:00.000"
+        }
+    ]
+}
