@@ -1,0 +1,57 @@
+{
+    "character_name": "祀",
+    "moments": [
+        {
+            "id": "m1",
+            "content": "蝴蝶自己跟过来的，不是我画的。\n墨还没干，别乱碰。\n等等，你刚才是不是偷偷按了一下翅膀？",
+            "images": ["files/01.jpg"],
+            "likes": ["管理员", "佩丽卡", "诀"],
+            "comments": [
+                { "sender": "佩丽卡", "content": "没有碰。只是观察。" },
+                { "sender": "祀", "content": "观察也不行！墨水会记仇的。", "reply_to": "佩丽卡" },
+                { "sender": "管理员", "content": "落款呢？" },
+                { "sender": "祀", "content": "……算你记得看。", "reply_to": "管理员" }
+            ],
+            "created_at": "2026-10-16T15:20:00.000"
+        },
+        {
+            "id": "m2",
+            "content": "给几位预约的客人画了像。\n表情都是他们自己长出来的，不能怪我的笔。\n画完以后，有人看起来很想追着我跑。",
+            "images": ["files/02.jpg"],
+            "likes": ["管理员", "佩丽卡", "明河"],
+            "comments": [
+                { "sender": "佩丽卡", "content": "左边那张，是我？" },
+                { "sender": "祀", "content": "神韵很准吧。", "reply_to": "佩丽卡" },
+                { "sender": "明河", "content": "右边那张请务必留下。" },
+                { "sender": "管理员", "content": "我觉得有人要找你算账。" }
+            ],
+            "created_at": "2026-10-15T18:10:00.000"
+        },
+        {
+            "id": "m3",
+            "content": "画到一半，墨魉又把构图撞歪了。\n本来想重画，看了一会儿，觉得这样也挺有意思。\n……门口那两个不许笑，进来帮忙研墨。",
+            "images": ["files/03.jpg"],
+            "likes": ["管理员", "佩丽卡", "诀"],
+            "comments": [
+                { "sender": "诀", "content": "需要我处理墨魉吗。" },
+                { "sender": "祀", "content": "不用，它已经害怕了。", "reply_to": "诀" },
+                { "sender": "管理员", "content": "看起来还挺开心。" },
+                { "sender": "祀", "content": "谁开心了？只是没浪费纸。", "reply_to": "管理员" }
+            ],
+            "created_at": "2026-10-14T20:40:00.000"
+        },
+        {
+            "id": "m4",
+            "content": "偶尔会有人问，我为什么也会露出这种表情。\n没什么。\n只是在想，十年前那幅画是不是该补上落款了。",
+            "images": ["files/04.jpg"],
+            "likes": ["管理员", "佩丽卡"],
+            "comments": [
+                { "sender": "管理员", "content": "我会想起来。" },
+                { "sender": "祀", "content": "嗯。想不起来也没关系，反正我记着。", "reply_to": "管理员" },
+                { "sender": "佩丽卡", "content": "需要备忘记录吗？" },
+                { "sender": "祀", "content": "不用。这个我自己记。", "reply_to": "佩丽卡" }
+            ],
+            "created_at": "2026-10-13T22:05:00.000"
+        }
+    ]
+}
